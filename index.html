@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GW Pathshala Paid Bot Interface</title>
+    <title>Free fire guild paid bot</title>
     <style>
         :root {
             --bg-color: #0b0b0b;
@@ -389,7 +389,7 @@
         
         <div class="top-nav">
             <span class="back-arrow" onclick="navigateFlowDecrement()">←</span>
-            <div class="interface-title" id="mainHeaderTitle">GW Pathshala Paid Bot</div>
+            <div class="interface-title" id="mainHeaderTitle">Free fire guild paid bot</div>
         </div>
 
         <div class="main-panel active" id="panel-stage1">
@@ -402,7 +402,7 @@
                 <div class="youtube-avatar">GW</div>
                 <div class="channel-info">
                     <h4>GW Pathshala Official</h4>
-                    <p>Subscribe 32k</p>
+                    <p>32k Subscribers</p>
                 </div>
             </a>
 
@@ -470,120 +470,3 @@
 
         <div class="main-panel" id="panel-stage3" style="text-align: center;">
             <div class="section-header" style="text-align: left;">
-                <div class="vertical-indicator"></div>
-                <div class="section-title">Payment</div>
-            </div>
-
-            <div class="summary-badge-box">
-                <div class="summary-title" id="summaryPackText">PACK: Pro Bot</div>
-                <div class="summary-amount" id="summaryAmountText">AMOUNT: 450 INR</div>
-            </div>
-
-            <div class="qr-outer-container">
-                <img src="https://i.ibb.co/6wX6pYm/trio-upi-qr.jpg" alt="UPI QR System" class="qr-display-img">
-            </div>
-
-            <div class="payment-caption">Scan QR Code to pay via UPI</div>
-
-            <div class="screenshot-box-wrapper">
-                <span class="screenshot-label-text">📸 Add Payment Screenshot</span>
-                <label for="screenshot-attachment" class="custom-upload-trigger">Choose File</label>
-                <input type="file" id="screenshot-attachment" style="display:none;" accept="image/*" onchange="previewScreenshotFile(event)">
-                
-                <div class="img-preview-frame" id="screenshotPreviewFrame">
-                    <p style="font-size:0.65rem; color:#00e676; margin-bottom:4px;">✓ Screenshot Added</p>
-                    <img id="attachedImageElement" src="#" alt="Receipt Preview">
-                </div>
-            </div>
-
-            <button class="btn-primary-forward" style="width:100%;" onclick="finalizeGloryOrder()">I Have Paid</button>
-            <span class="cancel-btn-label" onclick="switchInterfaceStep(2)">Cancel</span>
-        </div>
-
-        <div class="social-redirect-dock">
-            <a href="https://youtube.com/@gw_pathshala?si=8hnkqELaoYFxW0WD" target="_blank" class="social-link-block yt-btn">
-                <div class="social-dot-indicator"></div>
-                <span>YouTube</span>
-            </a>
-            <a href="https://t.me/GwPathshala" target="_blank" class="social-link-block tg-btn">
-                <div class="social-dot-indicator"></div>
-                <span>Telegram</span>
-            </a>
-        </div>
-
-        <div class="android-nav-strip">
-            <div class="nav-vector-icon back" onclick="navigateFlowDecrement()"></div>
-            <div class="nav-vector-icon circle" onclick="switchInterfaceStep(1)"></div>
-            <div class="nav-vector-icon"></div>
-        </div>
-
-    </div>
-
-    <script>
-        let currentStep = 1;
-        let globalPackName = "Pro Bot";
-        let globalPackPrice = "450";
-
-        function switchInterfaceStep(stepNumber) {
-            currentStep = stepNumber;
-            document.getElementById('panel-stage1').classList.remove('active');
-            document.getElementById('panel-stage2').classList.remove('active');
-            document.getElementById('panel-stage3').classList.remove('active');
-            
-            document.getElementById('panel-stage' + stepNumber).classList.add('active');
-        }
-
-        function pickPlanData(planName, planPrice) {
-            globalPackName = planName;
-            globalPackPrice = planPrice;
-            document.getElementById('summaryPackText').innerText = "PACK: " + planName;
-            document.getElementById('summaryAmountText').innerText = "AMOUNT: " + planPrice + " INR";
-            
-            if(planName === 'Normal') {
-                document.getElementById('box-normal').classList.add('selected');
-                document.getElementById('box-pro').classList.remove('selected');
-            } else {
-                document.getElementById('box-pro').classList.add('selected');
-                document.getElementById('box-normal').classList.remove('selected');
-            }
-        }
-
-        function navigateFlowDecrement() {
-            if(currentStep > 1) { switchInterfaceStep(currentStep - 1); }
-        }
-
-        function processAndVerifyInfo() {
-            const uid = document.getElementById('guildUidInput').value.trim();
-            const level = document.getElementById('guildLevelInput').value.trim();
-            const email = document.getElementById('contactEmailInput').value.trim();
-            
-            if(currentStep === 2 && (!uid || !level || !email)) {
-                alert("Please fill out all info fields including your Guild Level!");
-                return;
-            }
-            switchInterfaceStep(3);
-        }
-
-        function previewScreenshotFile(event) {
-            const input = event.target;
-            if (input.files && input.files[0]) {
-                const fileReader = new FileReader();
-                fileReader.onload = function(e) {
-                    document.getElementById('attachedImageElement').src = e.target.result;
-                    document.getElementById('screenshotPreviewFrame').style.display = 'flex';
-                };
-                fileReader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        function finalizeGloryOrder() {
-            const fileCheck = document.getElementById('screenshot-attachment');
-            if(!fileCheck.files || fileCheck.files.length === 0) {
-                alert("Please upload your payment receipt screenshot first.");
-                return;
-            }
-            alert("Order locked successfully! Our admin team will verify it soon.");
-        }
-    </script>
-</body>
-</html>
