@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GW PATHSHALA - Guild Glory Bot</title>
+    <style>
+        :root {
+            --bg-color: #060b0e;
+            --panel-bg: #0b141a;
+            --neon-blue: #00f3ff;
+            --neon-yellow: #ffcc00;
+            --text-color: #ffffff;
+            --text-muted: #6c7a82;
+            --success-green: #00ff66;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Header Style */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-box {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 8px var(--neon-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .brand-name {
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .badge {
+            background-color: #1a1a00;
+            border: 1px solid var(--neon-yellow);
+            color: var(--neon-yellow);
+            padding: 5px 10px;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 3px;
+        }
+
+        .status-line {
+            text-align: center;
+            color: var(--neon-blue);
+            font-size: 12px;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            font-weight: bold;
+        }
+
+        /* 1. PACKS SECTION */
+        .pricing-section {
+            width: 100%;
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            color: var(--neon-blue);
+            font-size: 14px;
+            text-align: center;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .price-card {
+            background: linear-gradient(135deg, #0b141a 0%, #0d2330 100%);
+            border: 1px solid #1c3545;
+            border-radius: 4px;
+            padding: 20px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .price-card:hover, .price-card.active {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 12px rgba(0, 243, 255, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .card-header h4 {
+            margin: 0;
+            font-size: 18px;
+            color: #fff;
+            letter-spacing: 0.5px;
+        }
+
+        .card-price {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--neon-yellow);
+        }
+
+        .features-list {
+            margin: 0;
+            padding-left: 18px;
+            font-size: 13px;
+            color: #d1d5db;
+            line-height: 1.6;
+        }
+
+        .features-list li {
+            margin-bottom: 5px;
+        }
+
+        /* 2. GUILD INFORMATION FORM */
+        .info-panel {
+            display: none;
+            background-color: var(--panel-bg);
+            border: 1px solid #172a35;
+            border-top: 3px solid var(--neon-blue);
+            padding: 25px 20px;
+            border-radius: 4px;
+            margin-bottom: 25px;
+        }
+
+        .panel-title {
+            color: var(--neon-yellow);
+            font-size: 16px;
+            font-weight: 800;
+            margin: 0 0 15px 0;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-group input {
+            width: 100%;
+            background-color: #0d1b24;
+            border: 1px solid #203a4a;
+            padding: 12px;
+            color: white;
+            box-sizing: border-box;
+            border-left: 3px solid var(--neon-blue);
+            font-size: 14px;
+        }
+
+        .next-btn {
+            width: 100%;
+            background-color: var(--neon-blue);
+            color: #000;
+            border: none;
+            padding: 14px;
+            font-weight: bold;
+            font-size: 15px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        /* 3. PAYMENT & SCREENSHOT SECTION */
+        .payment-panel {
+            display: none;
+            background-color: #09131a;
+            border: 1px solid var(--neon-yellow);
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .qr-placeholder {
+            width: 220px;
+            height: 220px;
+            background-color: #fff;
+            margin: 15px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            border: 4px solid var(--neon-yellow);
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        .qr-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .payment-msg {
+            font-size: 13px;
+            color: #fff;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .custom-file-btn {
+            display: block;
+            background-color: #12222d;
+            border: 1px dashed var(--neon-yellow);
+            padding: 12px;
+            color: var(--neon-yellow);
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .file-name-display {
+            font-size: 12px;
+            color: var(--success-green);
+            margin-top: 5px;
+            display: none;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background-color: var(--success-green);
+            color: #000;
+            border: none;
+            padding: 14px;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 20px;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+        .footer span {
+            color: var(--neon-yellow);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <div class="logo-section">
+            <div class="logo-box">GWP</div>
+            <div class="brand-name">GW PATHSHALA</div>
+        </div>
+        <div class="badge">🏆 30K+ LEARNER</div>
+    </div>
+
+    <div class="status-line">>> SYSTEM_ONLINE // SELECT A PACK</div>
+
+    <div class="pricing-section">
+        <div class="section-title">// AVAILABLE GLORY BOT PACKS //</div>
+        
+        <div class="price-card" onclick="openInfoForm('Normal Pack', '₹239')">
+            <div class="card-header">
+                <h4>Normal Pack</h4>
+                <div class="card-price">₹239</div>
+            </div>
+            <ul class="features-list">
+                <li>1 Lakh se 4 Lakh ke beech safe Glory push</li>
+                <li>Instant server connectivity</li>
+                <li>Best automated bot system</li>
+                <li>Full coordination and active support</li>
+            </ul>
+        </div>
+
+        <div class="price-card" onclick="openInfoForm('Pro Bot Pack', '₹450')">
+            <div class="card-header">
+                <h4>Pro Bot Pack</h4>
+                <div class="card-price">₹450</div>
+            </div>
+            <ul class="features-list">
+                <li>4.5 Lakh se 8 Lakh ke beech Max Glory push</li>
+                <li>Super-fast processing speed</li>
+                <li>Premium anti-ban secure protocol</li>
+                <li>24/7 Priority support</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="info-panel" id="info-form-panel">
+        <div class="panel-title" id="form-pack-title">GUILD DETAILS</div>
+
+        <div class="form-group">
+            <label>Guild Name *</label>
+            <input type="text" id="guild-name" placeholder="Enter Official Guild Name">
+        </div>
+
+        <div class="form-group">
+            <label>Guild UID *</label>
+            <input type="text" id="guild-uid" placeholder="Enter Guild ID">
+        </div>
+
+        <div class="form-group">
+            <label>Guild Level *</label>
+            <input type="number" id="guild-level" placeholder="e.g. 1, 2, 3, 4, 5">
+        </div>
+
+        <div class="form-group">
+            <label>WhatsApp Number *</label>
+            <input type="tel" id="user-phone" placeholder="For Active Coordination">
+        </div>
+
+        <button class="next-btn" onclick="openPaymentSection()">Generate Payment Gateway</button>
+    </div>
+
+    <div class="payment-panel" id="payment-panel">
+        <div class="panel-title" style="color: var(--neon-blue);" id="payment-pack-title">SCAN & PAY</div>
+        
+        <p class="payment-msg">Neeche diye gaye QR Code ko scan karke payment karein aur screenshot attach karein.</p>
+        
+        <div class="qr-placeholder">
+            <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/2wBDAQMDAwQDBAgEBAgQCwkLE गोष्टी (संक्षिप्त की गई सुरक्षा के लिए)" id="qr-img" alt="GW Pathshala Trio UPI QR">
+        </div>
+
+        <div class="file-input-wrapper">
+            <label class="custom-file-btn" for="screenshot-file">
+                📁 ATTACH PAYMENT SCREENSHOT
+            </label>
+            <input type="file" id="screenshot-file" accept="image/*" style="display: none;" onchange="showFileName()">
+            <div class="file-name-display" id="file-name-text">✓ Screenshot added successfully!</div>
+        </div>
+
+        <button class="submit-btn" onclick="finalSubmit()">Submit Order</button>
+    </div>
+
+    <div class="footer">
+        SYSTEM BY <span>GW PATHSHALA TOOL</span> | PROPERTY OF GW PATHSHALA
+    </div>
+
+</div>
+
+<script>
+    let selectedPackName = "";
+    let selectedPackPrice = "";
+
+    // Tumhara real QR code jo tumne bheja tha, uski string format
+    const realQrBase64 = "iVBORw0KGgoAAAANSUhEUgAAAmQAAAJkAQMAAAD69N06AAAABlBMVEUAAAD///+l2Z/dAAACVklEQVR4AewARf7gYmEwYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiY
