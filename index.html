@@ -3,389 +3,458 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GW PATHSHALA - Guild Glory Bot</title>
+    <title>GW PATHSHALA BOT | Glory System</title>
     <style>
         :root {
-            --bg-color: #060b0e;
-            --panel-bg: #0b141a;
-            --neon-blue: #00f3ff;
-            --neon-yellow: #ffcc00;
-            --text-color: #ffffff;
-            --text-muted: #6c7a82;
-            --success-green: #00ff66;
+            --crimson: #ff1a40;
+            --dark-bg: #0a0a0e;
+            --card-bg: #111116;
+            --text-color: #eeeeee;
+            --muted-text: #888892;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, sans-serif;
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-color);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark-bg);
             color: var(--text-color);
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh;
+            padding: 12px;
         }
 
-        .container {
+        /* Header Styles */
+        .header {
             width: 100%;
             max-width: 450px;
-            padding: 20px;
-            box-sizing: border-box;
+            margin: 10px 0 20px 0;
         }
 
-        /* Header Style */
-        .header {
+        .logo-row {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            width: 100%;
-            margin-bottom: 20px;
+            justify-content: space-between;
+            background: rgba(255, 26, 64, 0.02);
+            border: 1px solid rgba(255, 26, 64, 0.1);
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 12px;
         }
-        .logo-section {
+
+        .brand-block {
             display: flex;
             align-items: center;
             gap: 10px;
         }
+
         .logo-box {
-            width: 40px;
-            height: 40px;
-            border: 2px solid var(--neon-blue);
-            box-shadow: 0 0 8px var(--neon-blue);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 12px;
+            border: 1.5px solid var(--crimson);
+            color: var(--crimson);
+            font-weight: 800;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            background: rgba(255, 26, 64, 0.05);
         }
-        .brand-name {
-            font-size: 20px;
-            font-weight: bold;
+
+        .brand-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+
+        .sub-badge {
+            border: 1px solid #ffaa00;
+            color: #ffaa00;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: rgba(255, 170, 0, 0.03);
+        }
+
+        .system-status {
+            color: var(--crimson);
+            font-size: 0.75rem;
             letter-spacing: 1px;
-        }
-        .badge {
-            background-color: #1a1a00;
-            border: 1px solid var(--neon-yellow);
-            color: var(--neon-yellow);
-            padding: 5px 10px;
-            font-size: 11px;
-            font-weight: bold;
-            border-radius: 3px;
-        }
-
-        .status-line {
+            font-weight: 600;
+            text-transform: uppercase;
             text-align: center;
-            color: var(--neon-blue);
-            font-size: 12px;
-            letter-spacing: 2px;
-            margin-bottom: 25px;
-            font-weight: bold;
-        }
-
-        /* 1. PACKS SECTION */
-        .pricing-section {
-            width: 100%;
-            margin-bottom: 25px;
+            margin-bottom: 4px;
         }
 
         .section-title {
-            color: var(--neon-blue);
-            font-size: 14px;
             text-align: center;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
+            font-size: 0.8rem;
+            color: var(--muted-text);
+            letter-spacing: 0.5px;
             text-transform: uppercase;
+            margin-bottom: 15px;
         }
 
-        .price-card {
-            background: linear-gradient(135deg, #0b141a 0%, #0d2330 100%);
-            border: 1px solid #1c3545;
-            border-radius: 4px;
-            padding: 20px;
-            margin-bottom: 20px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .price-card:hover, .price-card.active {
-            border-color: var(--neon-blue);
-            box-shadow: 0 0 12px rgba(0, 243, 255, 0.3);
-        }
-
-        .card-header {
+        /* Main Container */
+        .container {
+            width: 100%;
+            max-width: 450px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Packs Side-by-Side Row */
+        .packs-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .pack-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 6px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .pack-card:hover {
+            border-color: rgba(255, 26, 64, 0.3);
+        }
+
+        .pack-card.selected {
+            border-color: var(--crimson);
+            box-shadow: 0 0 10px rgba(255, 26, 64, 0.1);
+            background: linear-gradient(180deg, var(--card-bg) 0%, rgba(255, 26, 64, 0.01) 100%);
+        }
+
+        .pack-name {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--crimson);
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        .pack-price {
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .feature-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .feature-list li {
+            font-size: 0.7rem;
+            color: var(--muted-text);
+            line-height: 1.2;
+            display: flex;
+            align-items: flex-start;
+            gap: 4px;
+        }
+
+        .feature-list li::before {
+            content: "✓";
+            color: var(--crimson);
+            font-weight: bold;
+        }
+
+        /* Panel Boxes */
+        .panel-box {
+            display: none;
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 26, 64, 0.15);
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 2px;
+            animation: panelSlide 0.25s ease forwards;
+        }
+
+        @keyframes panelSlide {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .box-heading {
+            font-size: 0.85rem;
+            color: var(--crimson);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            border-left: 2px solid var(--crimson);
+            padding-left: 6px;
+        }
+
+        .input-group {
+            margin-bottom: 10px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.7rem;
+            color: var(--muted-text);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .input-group input {
+            width: 100%;
+            background: #09090d;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 4px;
+            padding: 8px 10px;
+            color: #fff;
+            font-size: 0.8rem;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--crimson);
+        }
+
+        /* Action Button */
+        .btn-action {
+            width: 100%;
+            background: var(--crimson);
+            color: #000;
+            border: none;
+            padding: 10px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border-radius: 4px;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            margin-top: 5px;
+        }
+
+        /* Gateway Panel */
+        .gateway-text {
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+            color: var(--text-color);
+        }
+
+        .qr-wrapper {
+            background: #fff;
+            padding: 10px;
+            border-radius: 4px;
+            display: inline-block;
             margin-bottom: 12px;
         }
 
-        .card-header h4 {
-            margin: 0;
-            font-size: 18px;
-            color: #fff;
-            letter-spacing: 0.5px;
-        }
-
-        .card-price {
-            font-size: 22px;
-            font-weight: bold;
-            color: var(--neon-yellow);
-        }
-
-        .features-list {
-            margin: 0;
-            padding-left: 18px;
-            font-size: 13px;
-            color: #d1d5db;
-            line-height: 1.6;
-        }
-
-        .features-list li {
-            margin-bottom: 5px;
-        }
-
-        /* 2. GUILD INFORMATION FORM */
-        .info-panel {
-            display: none;
-            background-color: var(--panel-bg);
-            border: 1px solid #172a35;
-            border-top: 3px solid var(--neon-blue);
-            padding: 25px 20px;
-            border-radius: 4px;
-            margin-bottom: 25px;
-        }
-
-        .panel-title {
-            color: var(--neon-yellow);
-            font-size: 16px;
-            font-weight: 800;
-            margin: 0 0 15px 0;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
+        .qr-img {
+            width: 145px;
+            height: 145px;
             display: block;
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
-        .form-group input {
-            width: 100%;
-            background-color: #0d1b24;
-            border: 1px solid #203a4a;
-            padding: 12px;
-            color: white;
-            box-sizing: border-box;
-            border-left: 3px solid var(--neon-blue);
-            font-size: 14px;
-        }
-
-        .next-btn {
-            width: 100%;
-            background-color: var(--neon-blue);
-            color: #000;
-            border: none;
-            padding: 14px;
-            font-weight: bold;
-            font-size: 15px;
-            letter-spacing: 1px;
-            cursor: pointer;
-            text-transform: uppercase;
-        }
-
-        /* 3. PAYMENT & SCREENSHOT SECTION */
-        .payment-panel {
-            display: none;
-            background-color: #09131a;
-            border: 1px solid var(--neon-yellow);
-            padding: 20px;
+        .notice-text {
+            font-size: 0.7rem;
+            color: var(--muted-text);
+            background: rgba(255, 26, 64, 0.02);
+            border: 1px solid rgba(255, 26, 64, 0.08);
+            padding: 8px;
             border-radius: 4px;
-            margin-bottom: 30px;
-            text-align: center;
+            line-height: 1.3;
         }
 
-        .qr-placeholder {
-            width: 220px;
-            height: 220px;
-            background-color: #fff;
-            margin: 15px auto;
+        /* Footer Social Rows */
+        .social-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .btn-social {
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 8px;
-            border: 4px solid var(--neon-yellow);
-            padding: 5px;
-            box-sizing: border-box;
-        }
-
-        .qr-placeholder img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .payment-msg {
-            font-size: 13px;
+            gap: 6px;
+            background: #111116;
+            border: 1px solid rgba(255, 255, 255, 0.04);
             color: #fff;
-            margin-bottom: 15px;
-            line-height: 1.5;
-        }
-
-        .file-input-wrapper {
-            position: relative;
-            margin-bottom: 20px;
-        }
-
-        .custom-file-btn {
-            display: block;
-            background-color: #12222d;
-            border: 1px dashed var(--neon-yellow);
-            padding: 12px;
-            color: var(--neon-yellow);
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: bold;
-        }
-
-        .file-name-display {
-            font-size: 12px;
-            color: var(--success-green);
-            margin-top: 5px;
-            display: none;
-        }
-
-        .submit-btn {
-            width: 100%;
-            background-color: var(--success-green);
-            color: #000;
-            border: none;
-            padding: 14px;
-            font-weight: bold;
-            font-size: 15px;
-            cursor: pointer;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
-        .footer {
-            text-align: center;
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-top: 20px;
-            margin-bottom: 30px;
-            letter-spacing: 1px;
+        .btn-social.yt {
+            border-color: rgba(255, 26, 64, 0.15);
         }
-        .footer span {
-            color: var(--neon-yellow);
+
+        .btn-social.yt:hover {
+            background: rgba(255, 26, 64, 0.04);
+        }
+
+        .btn-social.tg:hover {
+            background: rgba(0, 136, 204, 0.04);
+        }
+
+        .footer-brand {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 0.6rem;
+            color: rgba(255, 255, 255, 0.1);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            width: 100%;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-
     <div class="header">
-        <div class="logo-section">
-            <div class="logo-box">GWP</div>
-            <div class="brand-name">GW PATHSHALA</div>
-        </div>
-        <div class="badge">🏆 30K+ LEARNER</div>
-    </div>
-
-    <div class="status-line">>> SYSTEM_ONLINE // SELECT A PACK</div>
-
-    <div class="pricing-section">
-        <div class="section-title">// AVAILABLE GLORY BOT PACKS //</div>
-        
-        <div class="price-card" onclick="openInfoForm('Normal Pack', '₹239')">
-            <div class="card-header">
-                <h4>Normal Pack</h4>
-                <div class="card-price">₹239</div>
+        <div class="logo-row">
+            <div class="brand-block">
+                <div class="logo-box">GWB</div>
+                <div class="brand-title">GW PATHSHALA BOT</div>
             </div>
-            <ul class="features-list">
-                <li>1 Lakh se 4 Lakh ke beech safe Glory push</li>
-                <li>Instant server connectivity</li>
-                <li>Best automated bot system</li>
-                <li>Full coordination and active support</li>
-            </ul>
+            <div class="sub-badge">🏆 31K+ SUBSCRIBERS</div>
         </div>
+        <div class="system-status">>> SYSTEM_ONLINE // SECURE_SYNC <<</div>
+        <div class="section-title">// Select Glory Pack //</div>
+    </div>
 
-        <div class="price-card" onclick="openInfoForm('Pro Bot Pack', '₹450')">
-            <div class="card-header">
-                <h4>Pro Bot Pack</h4>
-                <div class="card-price">₹450</div>
+    <div class="container">
+        
+        <div class="packs-row">
+            <div class="pack-card" id="card-normal" onclick="selectPack('Normal', '239')">
+                <div class="pack-name">Normal Pack</div>
+                <div class="pack-price">₹239</div>
+                <ul class="feature-list">
+                    <li>1L to 4L Glory Push</li>
+                    <li>Core Glory Engine</li>
+                    <li>Instant Server Sync</li>
+                    <li>Active Support</li>
+                </ul>
             </div>
-            <ul class="features-list">
-                <li>4.5 Lakh se 8 Lakh ke beech Max Glory push</li>
-                <li>Super-fast processing speed</li>
-                <li>Premium anti-ban secure protocol</li>
-                <li>24/7 Priority support</li>
-            </ul>
+
+            <div class="pack-card" id="card-pro" onclick="selectPack('Pro Bot', '450')">
+                <div class="pack-name">Pro Bot Pack</div>
+                <div class="pack-price">₹450</div>
+                <ul class="feature-list">
+                    <li>4.5L to 8L Max Push</li>
+                    <li>Ultra Fast Core</li>
+                    <li>Anti-Ban Bypass</li>
+                    <li>Priority Access</li>
+                </ul>
+            </div>
         </div>
+
+        <div class="panel-box" id="formPanel">
+            <div class="box-heading">Guild Information</div>
+            
+            <div class="input-group">
+                <label>Guild Name</label>
+                <input type="text" id="gname" placeholder="Enter Guild Name">
+            </div>
+
+            <div class="input-group">
+                <label>Guild UID *</label>
+                <input type="text" id="guid" placeholder="Enter Guild ID">
+            </div>
+
+            <div class="input-group">
+                <label>Guild Level (1-5)</label>
+                <input type="text" id="glevel" placeholder="e.g., 1-5">
+            </div>
+
+            <div class="input-group">
+                <label>Email Address *</label>
+                <input type="email" id="uemail" placeholder="For Confirmation Email">
+            </div>
+
+            <button class="btn-action" onclick="generateGateway()">Generate Payment QR</button>
+        </div>
+
+        <div class="panel-box" id="gatewayPanel" style="text-align: center;">
+            <div class="box-heading" style="text-align: left;">Payment Gateway</div>
+            <div class="gateway-text">SCAN TO PAY <strong id="gatewayPrice" style="color:var(--crimson)">₹0</strong> (<span id="gatewayPackName">Pack</span>)</div>
+            
+            <div class="qr-wrapper">
+                <img src="https://raw.githubusercontent.com/gwpathshala052/Gw-Pathshala-Bot/main/IMG-20260523-WA0000.jpg" alt="UPI QR Code" class="qr-img">
+            </div>
+
+            <div class="notice-text">
+                <strong>Important:</strong> After successful UPI payment, take a screenshot and send it with your registered Email to admin for instant bot verification.
+            </div>
+        </div>
+
+        <div class="social-row">
+            <a href="https://youtube.com/@gwextraa?si=L_66gdLneav2dWA5" target="_blank" class="btn-social yt">
+                <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="color:var(--crimson)"><path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.301 1.103.301 3.402.301 3.402s0 2.298-.301 3.401a2.008 2.008 0 0 1-1.415 1.42c-1.123.302-5.288.302-6.11.302-.822 0-4.987-.002-6.11-.302a2.007 2.007 0 0 1-1.415-1.42c-.301-1.103-.301-3.401-.301-3.401s0-2.299.301-3.402a2.008 2.008 0 0 1 1.415-1.42c1.123-.303 5.288-.303 6.11-.303zM5.93 5.171v4.256l4.019-2.128L5.93 5.17z"/></svg>
+                YouTube
+            </a>
+            <a href="https://t.me/GwPathshala" target="_blank" class="btn-social tg">
+                <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="color:#0088cc)"><path d="M16 1.353c-.15 1.37-3.9 16.202-3.9 16.202-.15.613-.526.764-.976.463L7.3 15.225l-2.027 1.944c-.225.226-.45.452-.9.452-.3 0-.45-.15-.526-.452L2 11.231.124 10.63c-.526-.15-.6-.527-.076-.75L15.024.15c.6-.226.9.075.9.603z"/></svg>
+                Telegram
+            </a>
+        </div>
+
     </div>
 
-    <div class="info-panel" id="info-form-panel">
-        <div class="panel-title" id="form-pack-title">GUILD DETAILS</div>
-
-        <div class="form-group">
-            <label>Guild Name *</label>
-            <input type="text" id="guild-name" placeholder="Enter Official Guild Name">
-        </div>
-
-        <div class="form-group">
-            <label>Guild UID *</label>
-            <input type="text" id="guild-uid" placeholder="Enter Guild ID">
-        </div>
-
-        <div class="form-group">
-            <label>Guild Level *</label>
-            <input type="number" id="guild-level" placeholder="e.g. 1, 2, 3, 4, 5">
-        </div>
-
-        <div class="form-group">
-            <label>WhatsApp Number *</label>
-            <input type="tel" id="user-phone" placeholder="For Active Coordination">
-        </div>
-
-        <button class="next-btn" onclick="openPaymentSection()">Generate Payment Gateway</button>
+    <div class="footer-brand">
+        SYSTEM BY GW PATHSHALA TOOL | PROPERTY OF GW PATHSHALA
     </div>
 
-    <div class="payment-panel" id="payment-panel">
-        <div class="panel-title" style="color: var(--neon-blue);" id="payment-pack-title">SCAN & PAY</div>
-        
-        <p class="payment-msg">Neeche diye gaye QR Code ko scan karke payment karein aur screenshot attach karein.</p>
-        
-        <div class="qr-placeholder">
-            <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/2wBDAQMDAwQDBAgEBAgQCwkLE गोष्टी (संक्षिप्त की गई सुरक्षा के लिए)" id="qr-img" alt="GW Pathshala Trio UPI QR">
-        </div>
+    <script>
+        let selectedPackName = "";
+        let selectedPackPrice = "";
 
-        <div class="file-input-wrapper">
-            <label class="custom-file-btn" for="screenshot-file">
-                📁 ATTACH PAYMENT SCREENSHOT
-            </label>
-            <input type="file" id="screenshot-file" accept="image/*" style="display: none;" onchange="showFileName()">
-            <div class="file-name-display" id="file-name-text">✓ Screenshot added successfully!</div>
-        </div>
+        function selectPack(name, price) {
+            selectedPackName = name;
+            selectedPackPrice = price;
 
-        <button class="submit-btn" onclick="finalSubmit()">Submit Order</button>
-    </div>
+            document.getElementById('card-normal').classList.remove('selected');
+            document.getElementById('card-pro').classList.remove('selected');
+            
+            if(name === 'Normal') {
+                document.getElementById('card-normal').classList.add('selected');
+            } else {
+                document.getElementById('card-pro').classList.add('selected');
+            }
 
-    <div class="footer">
-        SYSTEM BY <span>GW PATHSHALA TOOL</span> | PROPERTY OF GW PATHSHALA
-    </div>
+            document.getElementById('gatewayPanel').style.display = 'none';
+            
+            const formBox = document.getElementById('formPanel');
+            formBox.style.display = 'block';
+            formBox.scrollIntoView({ behavior: 'smooth' });
+        }
 
-</div>
+        function generateGateway() {
+            const uid = document.getElementById('guid').value.trim();
+            const email = document.getElementById('uemail').value.trim();
 
-<script>
-    let selectedPackName = "";
-    let selectedPackPrice = "";
+            if(!uid || !email) {
+                alert("Please fill all required fields (*) marked.");
+                return;
+            }
 
-    // Tumhara real QR code jo tumne bheja tha, uski string format
-    const realQrBase64 = "iVBORw0KGgoAAAANSUhEUgAAAmQAAAJkAQMAAAD69N06AAAABlBMVEUAAAD///+l2Z/dAAACVklEQVR4AewARf7gYmEwYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmI0NDQ0NDQ0NDRiYmJiYmJiYmJhYmJiY
+            document.getElementById('gatewayPrice').innerText = "₹" + selectedPackPrice;
+            document.getElementById('gatewayPackName').innerText = selectedPackName + " Pack";
+
+            const gatewayBox = document.getElementById('gatewayPanel');
+            gatewayBox.style.display = 'block';
+            gatewayBox.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
