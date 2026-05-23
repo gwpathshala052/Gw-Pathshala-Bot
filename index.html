@@ -98,12 +98,7 @@
             border-radius: 6px;
             padding: 20px 16px;
             flex-grow: 1;
-            display: none;
             flex-direction: column;
-        }
-
-        .main-panel.active {
-            display: flex;
         }
 
         /* YouTube Verification Card Block */
@@ -392,7 +387,7 @@
             <div class="interface-title" id="mainHeaderTitle">Free fire guild paid bot</div>
         </div>
 
-        <div class="main-panel active" id="panel-stage1">
+        <div class="main-panel" id="panel-stage1" style="display: flex;">
             <div class="section-header">
                 <div class="vertical-indicator"></div>
                 <div class="section-title">Pack Selection</div>
@@ -436,7 +431,7 @@
             <button class="action-submit-btn" onclick="switchInterfaceStep(2)">Continue to Info</button>
         </div>
 
-        <div class="main-panel" id="panel-stage2">
+        <div class="main-panel" id="panel-stage2" style="display: none;">
             <div class="section-header">
                 <div class="vertical-indicator"></div>
                 <div class="section-title">User Info</div>
@@ -468,7 +463,7 @@
             </div>
         </div>
 
-        <div class="main-panel" id="panel-stage3" style="text-align: center;">
+        <div class="main-panel" id="panel-stage3" style="display: none; text-align: center;">
             <div class="section-header" style="text-align: left;">
                 <div class="vertical-indicator"></div>
                 <div class="section-title">Payment</div>
@@ -488,4 +483,104 @@
             <div class="screenshot-box-wrapper">
                 <span class="screenshot-label-text">📸 Add Payment Screenshot</span>
                 <label for="screenshot-attachment" class="custom-upload-trigger">Choose File</label>
-                <input type="file
+                <input type="file" id="screenshot-attachment" style="display:none;" accept="image/*" onchange="previewScreenshotFile(event)">
+                
+                <div class="img-preview-frame" id="screenshotPreviewFrame">
+                    <p style="font-size:0.65rem; color:#00e676; margin-bottom:4px;">✓ Screenshot Added</p>
+                    <img id="attachedImageElement" src="#" alt="Receipt Preview">
+                </div>
+            </div>
+
+            <button class="btn-primary-forward" style="width:100%;" onclick="finalizeGloryOrder()">I Have Paid</button>
+            <span class="cancel-btn-label" onclick="switchInterfaceStep(2)">Cancel</span>
+        </div>
+
+        <div class="social-redirect-dock">
+            <a href="https://youtube.com/@gw_pathshala?si=8hnkqELaoYFxW0WD" target="_blank" class="social-link-block yt-btn">
+                <div class="social-dot-indicator"></div>
+                <span>YouTube</span>
+            </a>
+            <a href="https://t.me/GwPathshala" target="_blank" class="social-link-block tg-btn">
+                <div class="social-dot-indicator"></div>
+                <span>Telegram</span>
+            </a>
+        </div>
+
+        <div class="android-nav-strip">
+            <div class="nav-vector-icon back" onclick="navigateFlowDecrement()"></div>
+            <div class="nav-vector-icon circle" onclick="switchInterfaceStep(1)"></div>
+            <div class="nav-vector-icon"></div>
+        </div>
+
+    </div>
+
+    <script>
+        let currentStep = 1;
+        let globalPackName = "Pro Bot";
+        let globalPackPrice = "450";
+
+        function switchInterfaceStep(stepNumber) {
+            currentStep = stepNumber;
+            // Sabhi panels ko direct hide karo bina kisi class jhamela ke
+            document.getElementById('panel-stage1').style.display = 'none';
+            document.getElementById('panel-stage2').style.display = 'none';
+            document.getElementById('panel-stage3').style.display = 'none';
+            
+            // Jo panel chahiye use flex dikhao
+            document.getElementById('panel-stage' + stepNumber).style.display = 'flex';
+        }
+
+        function pickPlanData(planName, planPrice) {
+            globalPackName = planName;
+            globalPackPrice = planPrice;
+            document.getElementById('summaryPackText').innerText = "PACK: " + planName;
+            document.getElementById('summaryAmountText').innerText = "AMOUNT: " + planPrice + " INR";
+            
+            if(planName === 'Normal') {
+                document.getElementById('box-normal').classList.add('selected');
+                document.getElementById('box-pro').classList.remove('selected');
+            } else {
+                document.getElementById('box-pro').classList.add('selected');
+                document.getElementById('box-normal').classList.remove('selected');
+            }
+        }
+
+        function navigateFlowDecrement() {
+            if(currentStep > 1) { switchInterfaceStep(currentStep - 1); }
+        }
+
+        function processAndVerifyInfo() {
+            const uid = document.getElementById('guildUidInput').value.trim();
+            const level = document.getElementById('guildLevelInput').value.trim();
+            const email = document.getElementById('contactEmailInput').value.trim();
+            
+            if(!uid || !level || !email) {
+                alert("Please fill out all info fields including your Guild Level!");
+                return;
+            }
+            switchInterfaceStep(3);
+        }
+
+        function previewScreenshotFile(event) {
+            const input = event.target;
+            if (input.files && input.files[0]) {
+                const fileReader = new FileReader();
+                fileReader.onload = function(e) {
+                    document.getElementById('attachedImageElement').src = e.target.result;
+                    document.getElementById('screenshotPreviewFrame').style.display = 'flex';
+                };
+                fileReader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function finalizeGloryOrder() {
+            const fileCheck = document.getElementById('screenshot-attachment');
+            if(!fileCheck.files || fileCheck.files.length === 0) {
+                alert("Please upload your payment receipt screenshot first.");
+                return;
+            }
+            alert("Order locked successfully! Our admin team will verify it soon.");
+        }
+    </script>
+</body>
+</html>
