@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GW PATHSHALA BOT | Glory System</title>
+    <title>GW PATHSHALA | Glory Bot System</title>
     <style>
         :root {
             --crimson: #ff1a40;
-            --dark-bg: #0a0a0e;
-            --card-bg: #111116;
-            --text-color: #eeeeee;
-            --muted-text: #888892;
+            --dark-bg: #060609;
+            --card-bg: #0d0d14;
+            --text-color: #f0f0f5;
+            --muted-text: #8e8e9f;
+            --cyan-glow: #00e5ff;
+            --gold: #ffaa00;
         }
 
         * {
@@ -30,22 +32,22 @@
             padding: 12px;
         }
 
-        /* Header Styles */
+        /* Top Header Branding */
         .header {
             width: 100%;
             max-width: 450px;
-            margin: 10px 0 20px 0;
+            margin: 10px 0 15px 0;
         }
 
         .logo-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: rgba(255, 26, 64, 0.02);
-            border: 1px solid rgba(255, 26, 64, 0.1);
-            padding: 10px;
-            border-radius: 6px;
             margin-bottom: 12px;
+            background: rgba(0, 229, 255, 0.03);
+            border: 1px solid rgba(0, 229, 255, 0.1);
+            padding: 8px 12px;
+            border-radius: 4px;
         }
 
         .brand-block {
@@ -55,50 +57,43 @@
         }
 
         .logo-box {
-            border: 1.5px solid var(--crimson);
-            color: var(--crimson);
+            border: 2px solid var(--cyan-glow);
+            color: #fff;
             font-weight: 800;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            letter-spacing: 0.5px;
-            background: rgba(255, 26, 64, 0.05);
+            padding: 3px 6px;
+            font-size: 0.8rem;
+            background: rgba(0, 229, 255, 0.1);
+            box-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
         }
 
         .brand-title {
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             font-weight: 700;
-            letter-spacing: 0.3px;
-        }
-
-        .sub-badge {
-            border: 1px solid #ffaa00;
-            color: #ffaa00;
-            font-size: 0.7rem;
-            font-weight: 700;
-            padding: 3px 8px;
-            border-radius: 4px;
-            background: rgba(255, 170, 0, 0.03);
+            letter-spacing: 0.5px;
         }
 
         .system-status {
-            color: var(--crimson);
-            font-size: 0.75rem;
+            color: var(--cyan-glow);
+            font-size: 0.7rem;
             letter-spacing: 1px;
-            font-weight: 600;
-            text-transform: uppercase;
-            text-align: center;
-            margin-bottom: 4px;
+            font-weight: 700;
         }
 
-        .section-title {
-            text-align: center;
-            font-size: 0.8rem;
+        /* Step Progress */
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            font-size: 0.65rem;
             color: var(--muted-text);
-            letter-spacing: 0.5px;
             text-transform: uppercase;
-            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 8px;
         }
+
+        .step-dot.active { color: var(--crimson); }
 
         /* Main Container */
         .container {
@@ -106,10 +101,62 @@
             max-width: 450px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
         }
 
-        /* Packs Side-by-Side Row */
+        /* Smooth Page Switching Control */
+        .app-page {
+            display: none;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .app-page.active { display: flex; }
+
+        /* PAGE 1: Heavy Showcase Box to fill up space */
+        .yt-hero-card {
+            background: linear-gradient(135deg, #13131f 0%, #09090e 100%);
+            border: 1px solid rgba(255, 26, 64, 0.2);
+            border-radius: 6px;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .yt-hero-card h3 {
+            font-size: 1.15rem;
+            color: #fff;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
+
+        .yt-link-btn {
+            background: var(--crimson);
+            color: #000;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 800;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            width: 85%;
+            text-align: center;
+            display: block;
+            box-shadow: 0 0 10px rgba(255, 26, 64, 0.2);
+        }
+
+        .sub-count-text {
+            font-size: 0.75rem;
+            color: var(--gold);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        /* Packs Side-by-Side */
         .packs-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -122,21 +169,13 @@
             border-radius: 6px;
             padding: 12px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: border-color 0.2s;
         }
 
-        .pack-card:hover {
-            border-color: rgba(255, 26, 64, 0.3);
-        }
-
-        .pack-card.selected {
-            border-color: var(--crimson);
-            box-shadow: 0 0 10px rgba(255, 26, 64, 0.1);
-            background: linear-gradient(180deg, var(--card-bg) 0%, rgba(255, 26, 64, 0.01) 100%);
-        }
+        .pack-card:hover { border-color: rgba(255, 26, 64, 0.3); }
 
         .pack-name {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 700;
             color: var(--crimson);
             text-transform: uppercase;
@@ -144,8 +183,9 @@
         }
 
         .pack-price {
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             font-weight: 800;
+            color: #fff;
             margin-bottom: 8px;
         }
 
@@ -157,34 +197,25 @@
         }
 
         .feature-list li {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: var(--muted-text);
             line-height: 1.2;
             display: flex;
             align-items: flex-start;
-            gap: 4px;
+            gap: 3px;
         }
 
         .feature-list li::before {
-            content: "✓";
-            color: var(--crimson);
-            font-weight: bold;
+            content: "•";
+            color: var(--cyan-glow);
         }
 
-        /* Panel Boxes */
+        /* Forms & Containers */
         .panel-box {
-            display: none;
             background: var(--card-bg);
-            border: 1px solid rgba(255, 26, 64, 0.15);
+            border: 1px solid rgba(255, 26, 64, 0.25);
             border-radius: 6px;
-            padding: 15px;
-            margin-top: 2px;
-            animation: panelSlide 0.25s ease forwards;
-        }
-
-        @keyframes panelSlide {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
+            padding: 18px;
         }
 
         .box-heading {
@@ -192,15 +223,12 @@
             color: var(--crimson);
             text-transform: uppercase;
             font-weight: 700;
-            letter-spacing: 0.5px;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             border-left: 2px solid var(--crimson);
             padding-left: 6px;
         }
 
-        .input-group {
-            margin-bottom: 10px;
-        }
+        .input-group { margin-bottom: 12px; }
 
         .input-group label {
             display: block;
@@ -212,83 +240,75 @@
 
         .input-group input {
             width: 100%;
-            background: #09090d;
+            background: #050508;
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 4px;
-            padding: 8px 10px;
+            padding: 9px 12px;
             color: #fff;
             font-size: 0.8rem;
         }
 
-        .input-group input:focus {
-            outline: none;
-            border-color: var(--crimson);
-        }
+        .input-group input:focus { outline: none; border-color: var(--crimson); }
 
-        /* Action Button */
         .btn-action {
             width: 100%;
             background: var(--crimson);
             color: #000;
             border: none;
-            padding: 10px;
+            padding: 12px;
             font-weight: 700;
             font-size: 0.8rem;
             text-transform: uppercase;
             border-radius: 4px;
             cursor: pointer;
-            letter-spacing: 0.5px;
-            margin-top: 5px;
         }
 
-        /* Gateway Panel */
-        .gateway-text {
-            font-size: 0.8rem;
+        .btn-back {
+            background: none;
+            border: none;
+            color: var(--muted-text);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            cursor: pointer;
             margin-bottom: 12px;
-            color: var(--text-color);
+            display: inline-flex;
+            align-items: center;
         }
 
+        /* QR Target Area */
         .qr-wrapper {
             background: #fff;
-            padding: 10px;
+            padding: 8px;
             border-radius: 4px;
             display: inline-block;
-            margin-bottom: 12px;
+            margin: 15px 0;
         }
 
         .qr-img {
-            width: 145px;
-            height: 145px;
+            width: 160px;
+            height: 160px;
             display: block;
+            object-fit: contain;
         }
 
-        .notice-text {
-            font-size: 0.7rem;
-            color: var(--muted-text);
-            background: rgba(255, 26, 64, 0.02);
-            border: 1px solid rgba(255, 26, 64, 0.08);
-            padding: 8px;
-            border-radius: 4px;
-            line-height: 1.3;
-        }
-
-        /* Footer Social Rows */
+        /* Bottom Fixed Row */
         .social-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px;
+            gap: 10px;
             margin-top: 15px;
+            width: 100%;
+            max-width: 450px;
         }
 
         .btn-social {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            background: #111116;
+            background: #0d0d14;
             border: 1px solid rgba(255, 255, 255, 0.04);
             color: #fff;
-            padding: 8px;
+            padding: 10px;
             border-radius: 4px;
             font-size: 0.75rem;
             font-weight: 600;
@@ -296,26 +316,14 @@
             text-transform: uppercase;
         }
 
-        .btn-social.yt {
-            border-color: rgba(255, 26, 64, 0.15);
-        }
-
-        .btn-social.yt:hover {
-            background: rgba(255, 26, 64, 0.04);
-        }
-
-        .btn-social.tg:hover {
-            background: rgba(0, 136, 204, 0.04);
-        }
-
         .footer-brand {
             margin-top: 25px;
             text-align: center;
             font-size: 0.6rem;
             color: rgba(255, 255, 255, 0.1);
-            letter-spacing: 0.5px;
             text-transform: uppercase;
             width: 100%;
+            letter-spacing: 0.5px;
         }
     </style>
 </head>
@@ -324,89 +332,106 @@
     <div class="header">
         <div class="logo-row">
             <div class="brand-block">
-                <div class="logo-box">GWB</div>
-                <div class="brand-title">GW PATHSHALA BOT</div>
+                <div class="logo-box">GWP</div>
+                <div class="brand-title">GW PATHSHALA</div>
             </div>
-            <div class="sub-badge">🏆 31K+ SUBSCRIBERS</div>
+            <div class="system-status">SYS_ONLINE</div>
         </div>
-        <div class="system-status">>> SYSTEM_ONLINE // SECURE_SYNC <<</div>
-        <div class="section-title">// Select Glory Pack //</div>
+        
+        <div class="step-indicator">
+            <span class="step-dot active" id="dot1">1. Choose Pack</span>
+            <span class="step-dot" id="dot2">2. Info Form</span>
+            <span class="step-dot" id="dot3">3. Payment QR</span>
+        </div>
     </div>
 
     <div class="container">
         
-        <div class="packs-row">
-            <div class="pack-card" id="card-normal" onclick="selectPack('Normal', '239')">
-                <div class="pack-name">Normal Pack</div>
-                <div class="pack-price">₹239</div>
-                <ul class="feature-list">
-                    <li>1L to 4L Glory Push</li>
-                    <li>Core Glory Engine</li>
-                    <li>Instant Server Sync</li>
-                    <li>Active Support</li>
-                </ul>
+        <div class="app-page active" id="page-step1">
+            <div class="yt-hero-card">
+                <h3>GW EXTRAA OFFICIAL</h3>
+                <a href="https://youtube.com/@gwextraa?si=L_66gdLneav2dWA5" target="_blank" class="yt-link-btn">Visit The Channel</a>
+                <div class="sub-count-text">🏆 31K+ SUBSCRIBERS VERIFIED</div>
             </div>
 
-            <div class="pack-card" id="card-pro" onclick="selectPack('Pro Bot', '450')">
-                <div class="pack-name">Pro Bot Pack</div>
-                <div class="pack-price">₹450</div>
-                <ul class="feature-list">
-                    <li>4.5L to 8L Max Push</li>
-                    <li>Ultra Fast Core</li>
-                    <li>Anti-Ban Bypass</li>
-                    <li>Priority Access</li>
-                </ul>
+            <div class="packs-row">
+                <div class="pack-card" onclick="goToStep2('Normal', '239')">
+                    <div class="pack-name">Normal Pack</div>
+                    <div class="pack-price">₹239</div>
+                    <ul class="feature-list">
+                        <li>1 Lakh se 4 Lakh safe Glory push</li>
+                        <li>Instant server connectivity</li>
+                        <li>Best automated bot system</li>
+                        <li>Full coordination & support</li>
+                    </ul>
+                </div>
+
+                <div class="pack-card" onclick="goToStep2('Pro Bot', '450')">
+                    <div class="pack-name">Pro Bot Pack</div>
+                    <div class="pack-price">₹450</div>
+                    <ul class="feature-list">
+                        <li>4.5 Lakh se 8 Lakh Max push</li>
+                        <li>Super-fast processing speed</li>
+                        <li>Premium anti-ban secure protocol</li>
+                        <li>24/7 Priority support</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <div class="panel-box" id="formPanel">
-            <div class="box-heading">Guild Information</div>
+        <div class="app-page" id="page-step2">
+            <button class="btn-back" onclick="goBackToStep1()">← BACK TO PACKS</button>
             
-            <div class="input-group">
-                <label>Guild Name</label>
-                <input type="text" id="gname" placeholder="Enter Guild Name">
-            </div>
+            <div class="panel-box">
+                <div class="box-heading">Guild Information</div>
+                
+                <div class="input-group">
+                    <label>Guild Name</label>
+                    <input type="text" id="gname" placeholder="Enter Guild Name">
+                </div>
 
-            <div class="input-group">
-                <label>Guild UID *</label>
-                <input type="text" id="guid" placeholder="Enter Guild ID">
-            </div>
+                <div class="input-group">
+                    <label>Guild UID *</label>
+                    <input type="text" id="guid" placeholder="Enter Guild ID">
+                </div>
 
-            <div class="input-group">
-                <label>Guild Level (1-5)</label>
-                <input type="text" id="glevel" placeholder="e.g., 1-5">
-            </div>
+                <div class="input-group">
+                    <label>Guild Level (1-7)</label>
+                    <input type="text" id="glevel" placeholder="e.g., 1 to 7">
+                </div>
 
-            <div class="input-group">
-                <label>Email Address *</label>
-                <input type="email" id="uemail" placeholder="For Confirmation Email">
-            </div>
+                <div class="input-group">
+                    <label>Email Address *</label>
+                    <input type="email" id="uemail" placeholder="For Confirmation Email">
+                </div>
 
-            <button class="btn-action" onclick="generateGateway()">Generate Payment QR</button>
+                <button class="btn-action" onclick="goToStep3()">Generate Payment QR</button>
+            </div>
         </div>
 
-        <div class="panel-box" id="gatewayPanel" style="text-align: center;">
-            <div class="box-heading" style="text-align: left;">Payment Gateway</div>
-            <div class="gateway-text">SCAN TO PAY <strong id="gatewayPrice" style="color:var(--crimson)">₹0</strong> (<span id="gatewayPackName">Pack</span>)</div>
-            
-            <div class="qr-wrapper">
-                <img src="https://raw.githubusercontent.com/gwpathshala052/Gw-Pathshala-Bot/main/IMG-20260523-WA0000.jpg" alt="UPI QR Code" class="qr-img">
+        <div class="app-page" id="page-step3" style="text-align: center;">
+            <div style="text-align: left;">
+                <button class="btn-back" onclick="goBackToStep2()">← BACK TO FORM</button>
             </div>
+            
+            <div class="panel-box">
+                <div class="box-heading" style="text-align: left;">Payment Gateway</div>
+                <div style="font-size: 0.85rem; margin-bottom: 4px;">SCAN TO PAY <strong id="gatewayPrice" style="color:var(--crimson)">₹0</strong></div>
+                <div style="font-size: 0.68rem; color: var(--muted-text); text-transform: uppercase;" id="gatewayPackName">Pack Selected</div>
+                
+                <div class="qr-wrapper">
+                    <img src="IMG-20260523-WA0000.jpg" alt="UPI QR Code" class="qr-img">
+                </div>
 
-            <div class="notice-text">
-                <strong>Important:</strong> After successful UPI payment, take a screenshot and send it with your registered Email to admin for instant bot verification.
+                <div style="font-size: 0.7rem; color: var(--muted-text); background: rgba(255, 26, 64, 0.02); padding: 10px; border-radius: 4px; line-height: 1.4; text-align: left;">
+                    <strong>Important:</strong> After successful UPI payment, take a screenshot and send it with your registered Email to admin for instant bot verification.
+                </div>
             </div>
         </div>
 
         <div class="social-row">
-            <a href="https://youtube.com/@gwextraa?si=L_66gdLneav2dWA5" target="_blank" class="btn-social yt">
-                <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="color:var(--crimson)"><path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.301 1.103.301 3.402.301 3.402s0 2.298-.301 3.401a2.008 2.008 0 0 1-1.415 1.42c-1.123.302-5.288.302-6.11.302-.822 0-4.987-.002-6.11-.302a2.007 2.007 0 0 1-1.415-1.42c-.301-1.103-.301-3.401-.301-3.401s0-2.299.301-3.402a2.008 2.008 0 0 1 1.415-1.42c1.123-.303 5.288-.303 6.11-.303zM5.93 5.171v4.256l4.019-2.128L5.93 5.17z"/></svg>
-                YouTube
-            </a>
-            <a href="https://t.me/GwPathshala" target="_blank" class="btn-social tg">
-                <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="color:#0088cc)"><path d="M16 1.353c-.15 1.37-3.9 16.202-3.9 16.202-.15.613-.526.764-.976.463L7.3 15.225l-2.027 1.944c-.225.226-.45.452-.9.452-.3 0-.45-.15-.526-.452L2 11.231.124 10.63c-.526-.15-.6-.527-.076-.75L15.024.15c.6-.226.9.075.9.603z"/></svg>
-                Telegram
-            </a>
+            <a href="https://youtube.com/@gwextraa?si=L_66gdLneav2dWA5" target="_blank" class="btn-social">YouTube</a>
+            <a href="https://t.me/GwPathshala" target="_blank" class="btn-social">Telegram</a>
         </div>
 
     </div>
@@ -419,27 +444,36 @@
         let selectedPackName = "";
         let selectedPackPrice = "";
 
-        function selectPack(name, price) {
-            selectedPackName = name;
-            selectedPackPrice = price;
-
-            document.getElementById('card-normal').classList.remove('selected');
-            document.getElementById('card-pro').classList.remove('selected');
+        function changeStepPage(showPageId, activeDotId) {
+            // Hide all pages completely
+            document.getElementById('page-step1').style.display = 'none';
+            document.getElementById('page-step2').style.display = 'none';
+            document.getElementById('page-step3').style.display = 'none';
             
-            if(name === 'Normal') {
-                document.getElementById('card-normal').classList.add('selected');
-            } else {
-                document.getElementById('card-pro').classList.add('selected');
-            }
-
-            document.getElementById('gatewayPanel').style.display = 'none';
+            // Remove active dots color
+            document.querySelectorAll('.step-dot').forEach(dot => dot.classList.remove('active'));
             
-            const formBox = document.getElementById('formPanel');
-            formBox.style.display = 'block';
-            formBox.scrollIntoView({ behavior: 'smooth' });
+            // Activate current page
+            document.getElementById(showPageId).style.display = 'flex';
+            document.getElementById(activeDotId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function generateGateway() {
+        function goToStep2(packName, packPrice) {
+            selectedPackName = packName;
+            selectedPackPrice = packPrice;
+            changeStepPage('page-step2', 'dot2');
+        }
+
+        function goBackToStep1() {
+            changeStepPage('page-step1', 'dot1');
+        }
+
+        function goBackToStep2() {
+            changeStepPage('page-step2', 'dot2');
+        }
+
+        function goToStep3() {
             const uid = document.getElementById('guid').value.trim();
             const email = document.getElementById('uemail').value.trim();
 
@@ -448,12 +482,11 @@
                 return;
             }
 
+            // Put exact values dynamically
             document.getElementById('gatewayPrice').innerText = "₹" + selectedPackPrice;
-            document.getElementById('gatewayPackName').innerText = selectedPackName + " Pack";
-
-            const gatewayBox = document.getElementById('gatewayPanel');
-            gatewayBox.style.display = 'block';
-            gatewayBox.scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('gatewayPackName').innerText = selectedPackName + " Plan Active";
+            
+            changeStepPage('page-step3', 'dot3');
         }
     </script>
 </body>
