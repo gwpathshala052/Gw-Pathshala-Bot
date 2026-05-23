@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glory Bot System Interface</title>
+    <title>GW Pathshala Paid Bot Interface</title>
     <style>
         :root {
             --bg-color: #0b0b0b;
@@ -14,7 +14,8 @@
             --text-white: #ffffff;
             --text-grey: #a0a0a5;
             --border-grey: #2d2d30;
-            --button-blue: #1e355b;
+            --yt-red: #ff0000;
+            --tg-blue: #0088cc;
         }
 
         * {
@@ -31,10 +32,10 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            padding: 10px;
+            padding: 15px 10px;
         }
 
-        /* Phone Layout Base Wrapper */
+        /* Phone Frame Core Layout */
         .phone-frame {
             width: 100%;
             max-width: 410px;
@@ -47,6 +48,7 @@
             position: relative;
         }
 
+        /* Top Header Navigation */
         .top-nav {
             display: flex;
             align-items: center;
@@ -58,13 +60,16 @@
             font-size: 1.4rem;
             color: var(--text-white);
             cursor: pointer;
+            user-select: none;
         }
 
         .interface-title {
             font-size: 1.35rem;
-            font-weight: 500;
+            font-weight: 600;
+            letter-spacing: 0.2px;
         }
 
+        /* Section Title Indicators */
         .section-header {
             display: flex;
             align-items: center;
@@ -87,6 +92,7 @@
             text-transform: uppercase;
         }
 
+        /* Dynamic Screens Panel */
         .main-panel {
             background-color: var(--panel-bg);
             border-radius: 6px;
@@ -96,37 +102,51 @@
             flex-direction: column;
         }
 
-        .main-panel.active { display: flex; }
+        .main-panel.active {
+            display: flex;
+        }
 
-        /* PAGE 1: PACK SELECTION ELEMENT STYLES */
+        /* YouTube Verification Card Block */
         .youtube-card {
             background-color: #1a080c;
-            border: 1px solid rgba(255, 18, 66, 0.15);
+            border: 1px solid rgba(255, 18, 66, 0.25);
             border-radius: 8px;
-            padding: 15px;
+            padding: 14px 15px;
             display: flex;
             align-items: center;
             gap: 15px;
             margin-bottom: 20px;
+            text-decoration: none;
+            color: inherit;
         }
 
         .youtube-avatar {
             width: 45px;
             height: 45px;
-            background-color: #ff0000;
+            background-color: var(--accent-crimson);
             border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.9rem;
+            color: #fff;
+            box-shadow: 0 0 10px rgba(255, 18, 66, 0.4);
         }
 
         .channel-info h4 {
             font-size: 0.95rem;
             font-weight: 700;
+            letter-spacing: 0.3px;
         }
 
         .channel-info p {
-            font-size: 0.75rem;
+            font-size: 0.78rem;
             color: var(--text-grey);
+            margin-top: 2px;
         }
 
+        /* Selection Packages Box Style */
         .pack-option-box {
             background-color: var(--card-bg);
             border-radius: 8px;
@@ -138,6 +158,7 @@
 
         .pack-option-box.selected {
             border: 1.5px solid var(--accent-crimson);
+            box-shadow: 0 0 10px rgba(255, 18, 66, 0.1);
         }
 
         .pack-row-header {
@@ -191,8 +212,8 @@
             margin-top: auto;
         }
 
-        /* PAGE 2: USER INPUT FORM STYLES */
-        .input-block-group { margin-bottom: 20px; }
+        /* Form Inputs Area */
+        .input-block-group { margin-bottom: 16px; }
         .input-block-group label {
             display: block;
             font-size: 0.75rem;
@@ -200,6 +221,7 @@
             color: var(--accent-cyan);
             text-transform: uppercase;
             margin-bottom: 8px;
+            letter-spacing: 0.4px;
         }
 
         .input-block-group input {
@@ -211,6 +233,8 @@
             color: var(--text-white);
             font-size: 0.9rem;
         }
+
+        .input-block-group input:focus { outline: none; border-color: var(--accent-cyan); }
 
         .dual-nav-row {
             display: grid;
@@ -224,8 +248,10 @@
             border: 1px solid var(--border-grey);
             color: var(--text-white);
             padding: 14px;
+            font-weight: 600;
             text-transform: uppercase;
             border-radius: 4px;
+            cursor: pointer;
         }
 
         .btn-primary-forward {
@@ -239,12 +265,12 @@
             cursor: pointer;
         }
 
-        /* PAGE 3: GATEWAY & ADDED SCREENSHOT PREVIEW SECTION */
+        /* Payment Section Info Area */
         .summary-badge-box {
             background-color: var(--card-bg);
             border-radius: 6px;
             padding: 12px 15px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             text-align: left;
         }
 
@@ -256,19 +282,19 @@
             padding: 12px;
             border-radius: 12px;
             display: inline-block;
-            margin: 0 auto 15px auto;
+            margin: 0 auto 12px auto;
             border: 3px solid var(--accent-cyan);
         }
 
-        .qr-display-img { width: 170px; height: 170px; display: block; object-fit: contain; }
-        .payment-caption { font-size: 0.72rem; color: var(--text-grey); text-transform: uppercase; margin-bottom: 20px; }
+        .qr-display-img { width: 175px; height: 175px; display: block; object-fit: contain; }
+        .payment-caption { font-size: 0.72rem; color: var(--text-grey); text-transform: uppercase; margin-bottom: 15px; }
 
-        /* Integrated Custom Screenshot Upload Section */
+        /* Attachment Upload System */
         .screenshot-box-wrapper {
             border: 1px dashed rgba(0, 240, 255, 0.3);
             background: rgba(0, 240, 255, 0.02);
             border-radius: 6px;
-            padding: 12px;
+            padding: 10px;
             margin-bottom: 15px;
             text-align: center;
         }
@@ -301,49 +327,60 @@
             align-items: center;
         }
 
-        .img-preview-frame img {
-            max-width: 90px;
-            border-radius: 4px;
-            border: 1px solid var(--accent-crimson);
-        }
+        .img-preview-frame img { max-width: 90px; border-radius: 4px; border: 1px solid var(--accent-crimson); }
+        .cancel-btn-label { font-size: 0.8rem; color: #555558; text-transform: uppercase; font-weight: 600; margin-top: 12px; cursor: pointer; display: block; }
 
-        .cancel-btn-label {
-            font-size: 0.8rem;
-            color: #555558;
-            text-transform: uppercase;
-            font-weight: 600;
-            margin-top: 15px;
-            cursor: pointer;
-            display: block;
-        }
-
-        /* Lower Tracking Mock Panels */
-        .lower-debug-dock {
-            margin-top: 20px;
-            border-top: 1px solid #151515;
+        /* Social Channels Quick Navigation Dock Boxes */
+        .social-redirect-dock {
+            margin-top: auto;
             padding-top: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
+            border-top: 1px solid #1a1a1a;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
         }
 
-        .status-center-line { text-align: center; }
-        .status-label { font-size: 0.75rem; color: var(--text-grey); text-transform: uppercase; }
-        .status-value-text { font-size: 0.9rem; font-weight: 500; margin-top: 4px; }
+        .social-link-block {
+            border: 1px solid #222;
+            background-color: #121214;
+            border-radius: 8px;
+            padding: 12px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
 
-        .dock-row-controls { display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem; }
-        .flow-selector-group { display: flex; align-items: center; background-color: #161618; border-radius: 20px; padding: 4px 10px; gap: 12px; }
-        .arrow-step-btn { color: var(--text-grey); cursor: pointer; font-weight: bold; user-select: none; }
-        .current-stage-title { color: var(--text-white); font-weight: 500; }
+        .social-dot-indicator { width: 8px; height: 8px; border-radius: 50%; }
+        .social-link-block.yt-btn { border-left: 3px solid var(--yt-red); }
+        .social-link-block.yt-btn .social-dot-indicator { background-color: var(--yt-red); }
 
-        .pack-tabs-toggle { display: flex; background-color: #161618; border-radius: 6px; overflow: hidden; border: 1px solid #222; }
-        .tab-toggle-unit { padding: 6px 12px; font-size: 0.75rem; color: var(--text-white); cursor: pointer; }
-        .tab-toggle-unit.active { background-color: var(--button-blue); font-weight: 600; }
-        
-        .android-nav-strip { display: flex; justify-content: space-around; align-items: center; margin-top: 20px; }
-        .nav-vector-icon { width: 18px; height: 18px; border: 2px solid #555; border-radius: 2px; }
+        .social-link-block.tg-btn { border-left: 3px solid var(--tg-blue); }
+        .social-link-block.tg-btn .social-dot-indicator { background-color: var(--tg-blue); }
+
+        /* Mobile Simulation Keys */
+        .android-nav-strip {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 5px;
+        }
+
+        .nav-vector-icon { width: 18px; height: 18px; border: 2px solid #333; border-radius: 2px; }
         .nav-vector-icon.circle { border-radius: 50%; }
-        .nav-vector-icon.back { border: none; width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-right: 12px solid #555; }
+        .nav-vector-icon.back {
+            border: none; width: 0; height: 0;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-right: 12px solid #333;
+        }
     </style>
 </head>
 <body>
@@ -352,7 +389,7 @@
         
         <div class="top-nav">
             <span class="back-arrow" onclick="navigateFlowDecrement()">←</span>
-            <div class="interface-title">Glory Bot System Interface</div>
+            <div class="interface-title" id="mainHeaderTitle">GW Pathshala Paid Bot</div>
         </div>
 
         <div class="main-panel active" id="panel-stage1">
@@ -361,13 +398,13 @@
                 <div class="section-title">Pack Selection</div>
             </div>
 
-            <div class="youtube-card">
-                <div class="youtube-avatar"></div>
+            <a href="https://youtube.com/@gw_pathshala?si=8hnkqELaoYFxW0WD" target="_blank" class="youtube-card">
+                <div class="youtube-avatar">GW</div>
                 <div class="channel-info">
-                    <h4>GLORY BOT OFFICIAL</h4>
-                    <p>1.2M Subscribers</p>
+                    <h4>GW Pathshala Official</h4>
+                    <p>Subscribe 32k</p>
                 </div>
-            </div>
+            </a>
 
             <div class="pack-option-box" id="box-normal" onclick="pickPlanData('Normal', '239')">
                 <div class="pack-row-header">
@@ -416,6 +453,11 @@
             </div>
 
             <div class="input-block-group">
+                <label>Guild Level</label>
+                <input type="number" id="guildLevelInput" placeholder="e.g. 4">
+            </div>
+
+            <div class="input-block-group">
                 <label>Contact Email</label>
                 <input type="email" id="contactEmailInput" placeholder="e.g. player@mail.com">
             </div>
@@ -438,7 +480,7 @@
             </div>
 
             <div class="qr-outer-container">
-                <img src="1000032841.jpg" alt="UPI QR System" class="qr-display-img" onerror="this.src='https://i.ibb.co/6wX6pYm/trio-upi-qr.jpg';">
+                <img src="https://i.ibb.co/6wX6pYm/trio-upi-qr.jpg" alt="UPI QR System" class="qr-display-img">
             </div>
 
             <div class="payment-caption">Scan QR Code to pay via UPI</div>
@@ -458,28 +500,15 @@
             <span class="cancel-btn-label" onclick="switchInterfaceStep(2)">Cancel</span>
         </div>
 
-        <div class="lower-debug-dock">
-            <div class="status-center-line">
-                <div class="status-label">Status</div>
-                <div class="status-value-text" id="statusLogDisplay">Selecting Package</div>
-            </div>
-
-            <div class="dock-row-controls">
-                <div>Flow Stage</div>
-                <div class="flow-selector-group">
-                    <span class="arrow-step-btn" onclick="navigateFlowDecrement()">‹</span>
-                    <span class="current-stage-title" id="flowStageTitle">Pack Selection</span>
-                    <span class="arrow-step-btn" onclick="navigateFlowIncrement()">›</span>
-                </div>
-            </div>
-
-            <div class="dock-row-controls">
-                <div>Selected Pack</div>
-                <div class="pack-tabs-toggle">
-                    <span class="tab-toggle-unit" id="tabToggleNormal" onclick="pickPlanData('Normal', '239')">Normal</span>
-                    <span class="tab-toggle-unit active" id="tabTogglePro" onclick="pickPlanData('Pro Bot', '450')">Pro Bot</span>
-                </div>
-            </div>
+        <div class="social-redirect-dock">
+            <a href="https://youtube.com/@gw_pathshala?si=8hnkqELaoYFxW0WD" target="_blank" class="social-link-block yt-btn">
+                <div class="social-dot-indicator"></div>
+                <span>YouTube</span>
+            </a>
+            <a href="https://t.me/GwPathshala" target="_blank" class="social-link-block tg-btn">
+                <div class="social-dot-indicator"></div>
+                <span>Telegram</span>
+            </a>
         </div>
 
         <div class="android-nav-strip">
@@ -495,9 +524,6 @@
         let globalPackName = "Pro Bot";
         let globalPackPrice = "450";
 
-        const stepTitles = { 1: "Pack Selection", 2: "User Info", 3: "Payment" };
-        const statusLogs = { 1: "Selecting Package", 2: "Entering Details", 3: "Awaiting Payment" };
-
         function switchInterfaceStep(stepNumber) {
             currentStep = stepNumber;
             document.getElementById('panel-stage1').classList.remove('active');
@@ -505,8 +531,6 @@
             document.getElementById('panel-stage3').classList.remove('active');
             
             document.getElementById('panel-stage' + stepNumber).classList.add('active');
-            document.getElementById('flowStageTitle').innerText = stepTitles[stepNumber];
-            document.getElementById('statusLogDisplay').innerText = statusLogs[stepNumber];
         }
 
         function pickPlanData(planName, planPrice) {
@@ -518,20 +542,9 @@
             if(planName === 'Normal') {
                 document.getElementById('box-normal').classList.add('selected');
                 document.getElementById('box-pro').classList.remove('selected');
-                document.getElementById('tabToggleNormal').classList.add('active');
-                document.getElementById('tabTogglePro').classList.remove('active');
             } else {
                 document.getElementById('box-pro').classList.add('selected');
                 document.getElementById('box-normal').classList.remove('selected');
-                document.getElementById('tabTogglePro').classList.add('active');
-                document.getElementById('tabToggleNormal').classList.remove('active');
-            }
-        }
-
-        function navigateFlowIncrement() {
-            if(currentStep < 3) {
-                if(currentStep === 2) { processAndVerifyInfo(); } 
-                else { switchInterfaceStep(currentStep + 1); }
             }
         }
 
@@ -541,9 +554,11 @@
 
         function processAndVerifyInfo() {
             const uid = document.getElementById('guildUidInput').value.trim();
+            const level = document.getElementById('guildLevelInput').value.trim();
             const email = document.getElementById('contactEmailInput').value.trim();
-            if(currentStep === 2 && (!uid || !email)) {
-                alert("Please fill out the Guild UID and Contact Email fields.");
+            
+            if(currentStep === 2 && (!uid || !level || !email)) {
+                alert("Please fill out all info fields including your Guild Level!");
                 return;
             }
             switchInterfaceStep(3);
@@ -564,10 +579,10 @@
         function finalizeGloryOrder() {
             const fileCheck = document.getElementById('screenshot-attachment');
             if(!fileCheck.files || fileCheck.files.length === 0) {
-                alert("Please attach the payment screenshot file first!");
+                alert("Please upload your payment receipt screenshot first.");
                 return;
             }
-            alert("Order locked successfully! Attached screenshot submitted for admin verification.");
+            alert("Order locked successfully! Our admin team will verify it soon.");
         }
     </script>
 </body>
