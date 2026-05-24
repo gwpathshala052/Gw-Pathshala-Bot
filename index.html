@@ -5,552 +5,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Free fire guild paid bot</title>
     <style>
-        :root {
-            --bg-color: #0b0b0b;
-            --panel-bg: #111111;
-            --card-bg: #1d1d1f;
-            --accent-crimson: #ff1242;
-            --accent-cyan: #00f0ff;
-            --text-white: #ffffff;
-            --text-grey: #a0a0a5;
-            --border-grey: #2d2d30;
-            --yt-red: #ff0000;
-            --tg-blue: #0088cc;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-white);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding: 15px 10px;
-        }
-
-        /* Phone Frame Core Layout */
-        .phone-frame {
-            width: 100%;
-            max-width: 410px;
-            background-color: #000000;
-            border-radius: 8px;
-            padding: 20px 16px;
-            display: flex;
-            flex-direction: column;
-            min-height: 720px;
-            position: relative;
-        }
-
-        /* Top Header Navigation */
-        .top-nav {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .back-arrow {
-            font-size: 1.4rem;
-            color: var(--text-white);
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .interface-title {
-            font-size: 1.35rem;
-            font-weight: 600;
-            letter-spacing: 0.2px;
-        }
-
-        /* Section Title Indicators */
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .vertical-indicator {
-            width: 4px;
-            height: 24px;
-            background-color: var(--accent-cyan);
-            border-radius: 2px;
-        }
-
-        .section-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            letter-spacing: 0.8px;
-            color: var(--accent-crimson);
-            text-transform: uppercase;
-        }
-
-        /* Dynamic Screens Panel */
-        .main-panel {
-            background-color: var(--panel-bg);
-            border-radius: 6px;
-            padding: 20px 16px;
-            flex-grow: 1;
-            display: none;
-            flex-direction: column;
-        }
-
-        .main-panel.active {
-            display: flex;
-        }
-
-        /* Pack Option Box Styling */
-        .pack-option-box {
-            background-color: var(--card-bg);
-            border: 2px solid var(--border-grey);
-            border-radius: 6px;
-            padding: 16px;
-            margin-bottom: 15px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .pack-option-box.selected {
-            border-color: var(--accent-cyan);
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
-        }
-
-        .pack-header-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .pack-title-text {
-            font-size: 1.15rem;
-            font-weight: 700;
-        }
-
-        .pack-price-tag {
-            font-size: 1.15rem;
-            font-weight: 800;
-            color: var(--accent-cyan);
-        }
-
-        .pack-details-text {
-            font-size: 0.85rem;
-            color: var(--text-grey);
-            line-height: 1.4;
-        }
-
-        /* Input Form Elements */
-        .form-input-container {
-            margin-bottom: 18px;
-        }
-
-        .form-label-header {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-grey);
-            margin-bottom: 6px;
-            display: block;
-        }
-
-        .form-text-field {
-            width: 100%;
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-grey);
-            border-radius: 4px;
-            padding: 12px;
-            color: var(--text-white);
-            font-size: 1rem;
-            outline: none;
-        }
-
-        .form-text-field:focus {
-            border-color: var(--accent-crimson);
-        }
-
-        /* QR Code & Payment Section */
-        .summary-badge-box {
-            background-color: #1a1a1d;
-            border-radius: 4px;
-            padding: 12px;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.9rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        .summary-title { color: var(--text-grey); }
-        .summary-amount { color: var(--accent-cyan); }
-
-        .qr-outer-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 10px;
-        }
-
-        .qr-display-img {
-            width: 160px;
-            height: 160px;
-            border-radius: 4px;
-            border: 2px solid var(--border-grey);
-        }
-
-        .payment-caption {
-            font-size: 0.85rem;
-            color: var(--text-grey);
-            margin-bottom: 20px;
-        }
-
-        .screenshot-box-wrapper {
-            background-color: var(--card-bg);
-            border: 1px dashed var(--border-grey);
-            border-radius: 6px;
-            padding: 16px;
-            margin-bottom: 25px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .screenshot-label-text {
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .custom-upload-trigger {
-            background-color: #2a2a2e;
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .img-preview-frame {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 5px;
-        }
-
-        .img-preview-frame img {
-            max-width: 100px;
-            max-height: 100px;
-            border-radius: 4px;
-            margin-top: 4px;
-        }
-
-        /* Action Footer Buttons */
-        .action-submit-btn, .btn-primary-forward {
-            width: 100%;
-            background-color: var(--accent-crimson);
-            color: var(--text-white);
-            border: none;
-            border-radius: 4px;
-            padding: 14px;
-            font-size: 1.05rem;
-            font-weight: 700;
-            cursor: pointer;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            margin-top: auto;
-        }
-
-        .cancel-btn-label {
-            font-size: 0.9rem;
-            color: var(--text-grey);
-            margin-top: 12px;
-            cursor: pointer;
-            display: inline-block;
-        }
-
-        /* Social Redirect Footnotes */
-        .social-redirect-dock {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .social-link-block {
-            flex-grow: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px;
-            border-radius: 4px;
-            text-decoration: none;
-            color: var(--text-white);
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .yt-btn { background-color: var(--yt-red); }
-        .tg-btn { background-color: var(--tg-blue); }
-
-        .social-dot-indicator {
-            width: 6px;
-            height: 6px;
-            background-color: var(--text-white);
-            border-radius: 5px;
-        }
-
-        /* Bottom Status Navigation Strip */
-        .android-nav-strip {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 30px 5px 30px;
-            margin-top: 15px;
-        }
-
-        .nav-vector-icon {
-            width: 16px;
-            height: 16px;
-            opacity: 0.6;
-            cursor: pointer;
-        }
-
-        .nav-vector-icon.back {
-            border-left: 2px solid var(--text-white);
-            border-bottom: 2px solid var(--text-white);
-            transform: rotate(45deg);
-            width: 12px;
-            height: 12px;
-        }
-
-        .nav-vector-icon.circle {
-            border: 2px solid var(--text-white);
-            border-radius: 50%;
-        }
-
-        /* Status log bar tracker */
-        .status-log-bar {
-            font-size: 0.85rem;
-            color: var(--accent-cyan);
-            margin-top: 5px;
-            font-weight: 600;
-        }
+        :root { --bg-color: #0b0b0b; --panel-bg: #111111; --card-bg: #1d1d1f; --accent-crimson: #ff1242; --accent-cyan: #00f0ff; --text-white: #ffffff; --text-grey: #a0a0a5; --border-grey: #2d2d30; --yt-red: #ff0000; --tg-blue: #0088cc; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-white); display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 15px 10px; }
+        .phone-frame { width: 100%; max-width: 410px; background-color: #000000; border-radius: 8px; padding: 20px 16px; display: flex; flex-direction: column; min-height: 720px; position: relative; }
+        .main-panel { background-color: var(--panel-bg); border-radius: 6px; padding: 20px 16px; flex-grow: 1; display: none; flex-direction: column; }
+        .main-panel.active { display: flex; }
+        .action-submit-btn, .btn-primary-forward { width: 100%; background-color: var(--accent-crimson); color: var(--text-white); border: none; border-radius: 4px; padding: 14px; font-size: 1.05rem; font-weight: 700; cursor: pointer; text-transform: uppercase; margin-top: auto; }
+        .form-text-field { width: 100%; background-color: var(--card-bg); border: 1px solid var(--border-grey); border-radius: 4px; padding: 12px; color: var(--text-white); margin-bottom: 15px; }
     </style>
 </head>
 <body>
 
     <div class="phone-frame">
-        
-        <div class="top-nav">
-            <div class="back-arrow" onclick="navigateFlowDecrement()">⚡</div>
-            <div class="interface-title" id="mainHeaderTitle">Free fire guild paid bot</div>
-        </div>
-
-        <div class="main-panel active" id="panel-stage1" style="display: flex;">
-            <div class="section-header">
-                <div class="vertical-indicator"></div>
-                <div class="section-title">Pack Selection</div>
-            </div>
-
-            <div class="pack-option-box" id="box-normal" onclick="pickPlanData('Normal', '239')">
-                <div class="pack-header-row">
-                    <div class="pack-title-text">Normal Pack</div>
-                    <div class="pack-price-tag">239 INR</div>
-                </div>
-                <div class="pack-details-text">Basic features setup with custom dynamic updates for your guild management panel.</div>
-            </div>
-
-            <div class="pack-option-box selected" id="box-pro" onclick="pickPlanData('Pro Bot', '450')">
-                <div class="pack-header-row">
-                    <div class="pack-title-text">Pro Bot Pack</div>
-                    <div class="pack-price-tag">450 INR</div>
-                </div>
-                <div class="pack-details-text">Premium configuration setup, full auto-glory management features, and real-time live panel access.</div>
-            </div>
-
+        <div id="panel-stage1" class="main-panel active">
+            <div class="section-title">Pack Selection</div>
             <button class="action-submit-btn" onclick="switchInterfaceStep(2)">Continue to Info</button>
         </div>
 
-        <div class="main-panel" id="panel-stage2" style="display: none;">
-            <div class="section-header">
-                <div class="vertical-indicator"></div>
-                <div class="section-title">User Info</div>
-            </div>
-
-            <div class="form-input-container">
-                <label class="form-label-header">Guild UID</label>
-                <input type="text" id="guildUidInput" class="form-text-field" placeholder="Enter Guild UID Code">
-            </div>
-
-            <div class="form-input-container">
-                <label class="form-label-header">Guild Level</label>
-                <input type="text" id="guildLevelInput" class="form-text-field" placeholder="Enter Guild Current Level">
-            </div>
-
-            <div class="form-input-container">
-                <label class="form-label-header">Contact Email</label>
-                <input type="email" id="contactEmailInput" class="form-text-field" placeholder="Enter Active Email Address">
-            </div>
-
-            <button class="action-submit-btn" onclick="processAndVerifyInfo()">Continue to Payment</button>
+        <div id="panel-stage2" class="main-panel">
+            <input type="text" id="guildUidInput" class="form-text-field" placeholder="Guild UID">
+            <input type="text" id="guildNameInput" class="form-text-field" placeholder="Guild Name">
+            <input type="text" id="guildLevelInput" class="form-text-field" placeholder="Guild Level">
+            <input type="email" id="contactEmailInput" class="form-text-field" placeholder="Email">
+            <button class="action-submit-btn" onclick="switchInterfaceStep(3)">Continue to Payment</button>
         </div>
 
-        <div class="main-panel" id="panel-stage3" style="display: none; text-align: center;">
-            <div class="section-header" style="text-align: left;">
-                <div class="vertical-indicator"></div>
-                <div class="section-title">Payment</div>
-            </div>
-
-            <div class="summary-badge-box">
-                <div class="summary-title" id="summaryPackText">PACK: Pro Bot</div>
-                <div class="summary-amount" id="summaryAmountText">AMOUNT: 450 INR</div>
-            </div>
-
-            <div class="qr-outer-container">
-                <img src="https://i.ibb.co/sJb9m4n9/1000032841.jpg" alt="UPI QR System" class="qr-display-img">
-            </div>
-
-            <div class="payment-caption">Scan QR Code to pay via UPI</div>
-
-            <div class="screenshot-box-wrapper">
-                <span class="screenshot-label-text">📸 Add Payment Screenshot</span>
-                <label for="screenshot-attachment" class="custom-upload-trigger">Choose File</label>
-                <input type="file" id="screenshot-attachment" style="display:none;" accept="image/*" onchange="previewScreenshotFile(event)">
-                
-                <div class="img-preview-frame" id="screenshotPreviewFrame">
-                    <p style="font-size:0.65rem; color:#00e676; margin-bottom:4px;">✓ Screenshot Added</p>
-                    <img id="attachedImageElement" src="#" alt="Receipt Preview">
-                </div>
-            </div>
-
-            <div class="status-log-bar" id="statusLogDisplay">Awaiting Payment</div>
-            <button class="btn-primary-forward" style="width:100%; margin-top: 10px;" onclick="finalizeGloryOrder()">I Have Paid</button>
-            <span class="cancel-btn-label" onclick="switchInterfaceStep(2)">Cancel</span>
+        <div id="panel-stage3" class="main-panel">
+            <input type="file" id="screenshot-attachment" accept="image/*">
+            <button class="btn-primary-forward" onclick="finalizeGloryOrder()">I Have Paid</button>
         </div>
 
         <div class="social-redirect-dock">
-            <a href="https://youtube.com/@gw_pathshala?si=8hnkqELaoYFxW0WD" target="_blank" class="social-link-block yt-btn">
-                <div class="social-dot-indicator"></div>
-                <span>YouTube</span>
-            </a>
-            <a href="https://t.me/GwPathshala" target="_blank" class="social-link-block tg-btn">
-                <div class="social-dot-indicator"></div>
-                <span>Telegram</span>
-            </a>
+            <a href="https://youtube.com/@gw_pathshala?si=8hnkqELaoYFxW0WD" class="yt-btn">YouTube 32k Subs</a>
+            <a href="https://t.me/GwPathshala" class="tg-btn">Telegram</a>
         </div>
-
-        <div class="android-nav-strip">
-            <div class="nav-vector-icon back" onclick="navigateFlowDecrement()"></div>
-            <div class="nav-vector-icon circle" onclick="switchInterfaceStep(1)"></div>
-            <div class="nav-vector-icon"></div>
-        </div>
-
     </div>
 
     <script>
-        let currentStep = 1;
-        let globalPackName = "Pro Bot";
-        let globalPackPrice = "450";
-
-        function switchInterfaceStep(stepNumber) {
-            currentStep = stepNumber;
-            document.getElementById('panel-stage1').style.display = 'none';
-            document.getElementById('panel-stage2').style.display = 'none';
-            document.getElementById('panel-stage3').style.display = 'none';
-            document.getElementById('panel-stage' + stepNumber).style.display = 'flex';
+        function switchInterfaceStep(step) {
+            document.querySelectorAll('.main-panel').forEach(p => p.style.display = 'none');
+            document.getElementById('panel-stage' + step).style.display = 'flex';
         }
 
-        function pickPlanData(planName, planPrice) {
-            globalPackName = planName;
-            globalPackPrice = planPrice;
-            document.getElementById('summaryPackText').innerText = "PACK: " + planName;
-            document.getElementById('summaryAmountText').innerText = "AMOUNT: " + planPrice + " INR";
-            
-            if(planName === 'Normal') {
-                document.getElementById('box-normal').classList.add('selected');
-                document.getElementById('box-pro').classList.remove('selected');
-            } else {
-                document.getElementById('box-pro').classList.add('selected');
-                document.getElementById('box-normal').classList.remove('selected');
-            }
-        }
-
-        function navigateFlowDecrement() {
-            if(currentStep > 1) { switchInterfaceStep(currentStep - 1); }
-        }
-
-        function processAndVerifyInfo() {
-            const uid = document.getElementById('guildUidInput').value.trim();
-            const level = document.getElementById('guildLevelInput').value.trim();
-            const email = document.getElementById('contactEmailInput').value.trim();
-            
-            if(!uid || !level || !email) {
-                alert("Please fill out all info fields including your Guild Level!");
-                return;
-            }
-            switchInterfaceStep(3);
-        }
-
-        function previewScreenshotFile(event) {
-            const input = event.target;
-            if (input.files && input.files[0]) {
-                const fileReader = new FileReader();
-                fileReader.onload = function(e) {
-                    document.getElementById('attachedImageElement').src = e.target.result;
-                    document.getElementById('screenshotPreviewFrame').style.display = 'flex';
-                };
-                fileReader.readAsDataURL(input.files[0]);
-            }
-        }
-
+        // Yeh hai sahi aur simple function
         function finalizeGloryOrder() {
-            const fileCheck = document.getElementById('screenshot-attachment');
-            const uid = document.getElementById('guildUidInput').value.trim();
-            const level = document.getElementById('guildLevelInput').value.trim();
-            const email = document.getElementById('contactEmailInput').value.trim();
-
-            if(!fileCheck.files || fileCheck.files.length === 0) {
-                alert("Please upload your payment receipt screenshot first.");
-                return;
-            }
-
-            document.getElementById('statusLogDisplay').innerText = "Submitting Order...";
-            alert("Sending details to Admin Panel... Please wait 3 to 5 seconds.");
+            const fileInput = document.getElementById('screenshot-attachment');
+            if(!fileInput.files[0]) { alert("Screenshot upload karo!"); return; }
 
             const formData = new FormData();
-            formData.append("Guild UID", uid);
-            formData.append("Guild Level", level);
-            formData.append("Contact Email", email);
-            formData.append("Selected Pack", globalPackName);
-            formData.append("Price", globalPackPrice + " INR");
-            formData.append("Payment Screenshot", fileCheck.files[0]);
+            formData.append("Guild UID", document.getElementById('guildUidInput').value);
+            formData.append("Guild Name", document.getElementById('guildNameInput').value);
+            formData.append("Guild Level", document.getElementById('guildLevelInput').value);
+            formData.append("Email", document.getElementById('contactEmailInput').value);
+            formData.append("file", fileInput.files[0]);
 
+            // FormSubmit backend connection
             fetch("https://formsubmit.co/ajax/Pandatkaran401@gmail.com", {
                 method: "POST",
                 body: formData
             })
-            .then(response => response.json())
+            .then(res => res.json())
             .then(data => {
-                if(data.success === "true" || data.success === true) {
-                    document.getElementById('statusLogDisplay').innerText = "Order Secured!";
-                    alert("SUCCESS! Your details and screenshot have been submitted successfully.");
-                    fileCheck.value = "";
-                    document.getElementById('screenshotPreviewFrame').style.display = 'none';
-                } else {
-                    alert("Submission failed. Please try again.");
-                    document.getElementById('statusLogDisplay').innerText = "Awaiting Payment";
-                }
+                alert("Success! Order recorded.");
             })
-            .catch(error => {
-                console.error("Error:", error);
-                alert("Something went wrong. Please check your internet connection.");
-                document.getElementById('statusLogDisplay').innerText = "Awaiting Payment";
-            });
+            .catch(() => alert("Error, try again."));
         }
     </script>
 </body>
