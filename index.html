@@ -98,283 +98,247 @@
             border-radius: 6px;
             padding: 20px 16px;
             flex-grow: 1;
+            display: none;
             flex-direction: column;
         }
 
-        /* YouTube Verification Card Block */
-        .youtube-card {
-            background-color: #1a080c;
-            border: 1px solid rgba(255, 18, 66, 0.25);
-            border-radius: 8px;
-            padding: 14px 15px;
+        .main-panel.active {
             display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            text-decoration: none;
-            color: inherit;
         }
 
-        .youtube-avatar {
-            width: 45px;
-            height: 45px;
-            background-color: var(--accent-crimson);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 0.9rem;
-            color: #fff;
-            box-shadow: 0 0 10px rgba(255, 18, 66, 0.4);
-        }
-
-        .channel-info h4 {
-            font-size: 0.95rem;
-            font-weight: 700;
-            letter-spacing: 0.3px;
-        }
-
-        .channel-info p {
-            font-size: 0.78rem;
-            color: var(--text-grey);
-            margin-top: 2px;
-        }
-
-        /* Selection Packages Box Style */
+        /* Pack Option Box Styling */
         .pack-option-box {
             background-color: var(--card-bg);
-            border-radius: 8px;
-            padding: 18px 16px;
-            margin-bottom: 16px;
-            border: 1px solid transparent;
+            border: 2px solid var(--border-grey);
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 15px;
             cursor: pointer;
+            transition: all 0.2s ease;
         }
 
         .pack-option-box.selected {
-            border: 1.5px solid var(--accent-crimson);
-            box-shadow: 0 0 10px rgba(255, 18, 66, 0.1);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
         }
 
-        .pack-row-header {
+        .pack-header-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
-        .pack-type-name { font-size: 1.15rem; font-weight: 700; }
-        .pack-rate { font-size: 1.05rem; font-weight: 700; color: var(--accent-cyan); }
+        .pack-title-text {
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
 
-        .features-bullet-list { list-style: none; padding-left: 5px; }
-        .features-bullet-list li {
+        .pack-price-tag {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--accent-cyan);
+        }
+
+        .pack-details-text {
             font-size: 0.85rem;
             color: var(--text-grey);
+            line-height: 1.4;
+        }
+
+        /* Input Form Elements */
+        .form-input-container {
+            margin-bottom: 18px;
+        }
+
+        .form-label-header {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-grey);
             margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .features-bullet-list li::before { content: "•"; }
-
-        .inner-select-btn {
-            width: 100%;
-            background-color: var(--accent-crimson);
-            color: var(--text-white);
-            border: none;
-            padding: 10px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            border-radius: 6px;
-            margin-top: 10px;
-            display: none;
-        }
-
-        .pack-option-box.selected .inner-select-btn { display: block; }
-
-        .action-submit-btn {
-            width: 100%;
-            background-color: var(--accent-cyan);
-            color: #000000;
-            border: none;
-            padding: 14px;
-            font-size: 0.95rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-top: auto;
-        }
-
-        /* Form Inputs Area */
-        .input-block-group { margin-bottom: 16px; }
-        .input-block-group label {
             display: block;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--accent-cyan);
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            letter-spacing: 0.4px;
         }
 
-        .input-block-group input {
+        .form-text-field {
             width: 100%;
-            background-color: #050505;
+            background-color: var(--card-bg);
             border: 1px solid var(--border-grey);
-            border-radius: 6px;
+            border-radius: 4px;
             padding: 12px;
             color: var(--text-white);
-            font-size: 0.9rem;
+            font-size: 1rem;
+            outline: none;
         }
 
-        .input-block-group input:focus { outline: none; border-color: var(--accent-cyan); }
-
-        .dual-nav-row {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 12px;
-            margin-top: auto;
+        .form-text-field:focus {
+            border-color: var(--accent-crimson);
         }
 
-        .btn-secondary-back {
-            background-color: #161618;
-            border: 1px solid var(--border-grey);
-            color: var(--text-white);
-            padding: 14px;
-            font-weight: 600;
-            text-transform: uppercase;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .btn-primary-forward {
-            background-color: var(--accent-crimson);
-            color: var(--text-white);
-            border: none;
-            padding: 14px;
-            font-weight: 700;
-            text-transform: uppercase;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        /* Payment Section Info Area */
+        /* QR Code & Payment Section */
         .summary-badge-box {
-            background-color: var(--card-bg);
-            border-radius: 6px;
-            padding: 12px 15px;
-            margin-bottom: 20px;
-            text-align: left;
+            background-color: #1a1a1d;
+            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
 
-        .summary-title { font-size: 0.85rem; font-weight: 700; margin-bottom: 4px; }
-        .summary-amount { font-size: 0.85rem; font-weight: 700; color: var(--accent-cyan); }
+        .summary-title { color: var(--text-grey); }
+        .summary-amount { color: var(--accent-cyan); }
 
         .qr-outer-container {
-            background-color: #ffffff;
-            padding: 12px;
-            border-radius: 12px;
-            display: inline-block;
-            margin: 0 auto 12px auto;
-            border: 3px solid var(--accent-cyan);
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
         }
 
-        .qr-display-img { width: 175px; height: 175px; display: block; object-fit: contain; }
-        .payment-caption { font-size: 0.72rem; color: var(--text-grey); text-transform: uppercase; margin-bottom: 15px; }
+        .qr-display-img {
+            width: 160px;
+            height: 160px;
+            border-radius: 4px;
+            border: 2px solid var(--border-grey);
+        }
 
-        /* Attachment Upload System */
+        .payment-caption {
+            font-size: 0.85rem;
+            color: var(--text-grey);
+            margin-bottom: 20px;
+        }
+
         .screenshot-box-wrapper {
-            border: 1px dashed rgba(0, 240, 255, 0.3);
-            background: rgba(0, 240, 255, 0.02);
+            background-color: var(--card-bg);
+            border: 1px dashed var(--border-grey);
             border-radius: 6px;
-            padding: 10px;
-            margin-bottom: 15px;
-            text-align: center;
+            padding: 16px;
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
         }
 
         .screenshot-label-text {
-            font-size: 0.75rem;
-            color: var(--accent-cyan);
-            font-weight: bold;
-            display: block;
-            margin-bottom: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
         }
 
         .custom-upload-trigger {
-            display: inline-block;
-            background: #222;
-            border: 1px solid #333;
-            color: #fff;
-            padding: 6px 14px;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            font-weight: 600;
+            background-color: #2a2a2e;
+            padding: 8px 16px;
             border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
             cursor: pointer;
         }
 
         .img-preview-frame {
-            margin-top: 8px;
             display: none;
             flex-direction: column;
             align-items: center;
+            margin-top: 5px;
         }
 
-        .img-preview-frame img { max-width: 90px; border-radius: 4px; border: 1px solid var(--accent-crimson); }
-        .cancel-btn-label { font-size: 0.8rem; color: #555558; text-transform: uppercase; font-weight: 600; margin-top: 12px; cursor: pointer; display: block; }
+        .img-preview-frame img {
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 4px;
+            margin-top: 4px;
+        }
 
-        /* Social Channels Quick Navigation Dock Boxes */
-        .social-redirect-dock {
+        /* Action Footer Buttons */
+        .action-submit-btn, .btn-primary-forward {
+            width: 100%;
+            background-color: var(--accent-crimson);
+            color: var(--text-white);
+            border: none;
+            border-radius: 4px;
+            padding: 14px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
             margin-top: auto;
-            padding-top: 15px;
-            border-top: 1px solid #1a1a1a;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
+        }
+
+        .cancel-btn-label {
+            font-size: 0.9rem;
+            color: var(--text-grey);
+            margin-top: 12px;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        /* Social Redirect Footnotes */
+        .social-redirect-dock {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
         }
 
         .social-link-block {
-            border: 1px solid #222;
-            background-color: #121214;
-            border-radius: 8px;
-            padding: 12px 10px;
+            flex-grow: 1;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            padding: 12px;
+            border-radius: 4px;
             text-decoration: none;
-            color: #ffffff;
-            font-size: 0.85rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
+            color: var(--text-white);
+            font-size: 0.9rem;
+            font-weight: 600;
         }
 
-        .social-dot-indicator { width: 8px; height: 8px; border-radius: 50%; }
-        .social-link-block.yt-btn { border-left: 3px solid var(--yt-red); }
-        .social-link-block.yt-btn .social-dot-indicator { background-color: var(--yt-red); }
+        .yt-btn { background-color: var(--yt-red); }
+        .tg-btn { background-color: var(--tg-blue); }
 
-        .social-link-block.tg-btn { border-left: 3px solid var(--tg-blue); }
-        .social-link-block.tg-btn .social-dot-indicator { background-color: var(--tg-blue); }
+        .social-dot-indicator {
+            width: 6px;
+            height: 6px;
+            background-color: var(--text-white);
+            border-radius: 5px;
+        }
 
-        /* Mobile Simulation Keys */
+        /* Bottom Status Navigation Strip */
         .android-nav-strip {
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
             align-items: center;
+            padding: 15px 30px 5px 30px;
             margin-top: 15px;
-            padding-top: 5px;
         }
 
-        .nav-vector-icon { width: 18px; height: 18px; border: 2px solid #333; border-radius: 2px; }
-        .nav-vector-icon.circle { border-radius: 50%; }
+        .nav-vector-icon {
+            width: 16px;
+            height: 16px;
+            opacity: 0.6;
+            cursor: pointer;
+        }
+
         .nav-vector-icon.back {
-            border: none; width: 0; height: 0;
-            border-top: 8px solid transparent;
-            border-bottom: 8px solid transparent;
-            border-right: 12px solid #333;
+            border-left: 2px solid var(--text-white);
+            border-bottom: 2px solid var(--text-white);
+            transform: rotate(45deg);
+            width: 12px;
+            height: 12px;
+        }
+
+        .nav-vector-icon.circle {
+            border: 2px solid var(--text-white);
+            border-radius: 50%;
+        }
+
+        /* Status log bar tracker */
+        .status-log-bar {
+            font-size: 0.85rem;
+            color: var(--accent-cyan);
+            margin-top: 5px;
+            font-weight: 600;
         }
     </style>
 </head>
@@ -383,49 +347,30 @@
     <div class="phone-frame">
         
         <div class="top-nav">
-            <span class="back-arrow" onclick="navigateFlowDecrement()">←</span>
+            <div class="back-arrow" onclick="navigateFlowDecrement()">⚡</div>
             <div class="interface-title" id="mainHeaderTitle">Free fire guild paid bot</div>
         </div>
 
-        <div class="main-panel" id="panel-stage1" style="display: flex;">
+        <div class="main-panel active" id="panel-stage1" style="display: flex;">
             <div class="section-header">
                 <div class="vertical-indicator"></div>
                 <div class="section-title">Pack Selection</div>
             </div>
 
-            <a href="https://youtube.com/@gw_pathshala?si=8hnkqELaoYFxW0WD" target="_blank" class="youtube-card">
-                <div class="youtube-avatar">GW</div>
-                <div class="channel-info">
-                    <h4>GW Pathshala Official</h4>
-                    <p>32k Subscribers</p>
-                </div>
-            </a>
-
             <div class="pack-option-box" id="box-normal" onclick="pickPlanData('Normal', '239')">
-                <div class="pack-row-header">
-                    <span class="pack-type-name">Normal</span>
-                    <span class="pack-rate">239 INR</span>
+                <div class="pack-header-row">
+                    <div class="pack-title-text">Normal Pack</div>
+                    <div class="pack-price-tag">239 INR</div>
                 </div>
-                <ul class="features-bullet-list">
-                    <li>Standard Bot Speed</li>
-                    <li>Monthly Access</li>
-                    <li>Email Support</li>
-                </ul>
-                <button class="inner-select-btn">Selected</button>
+                <div class="pack-details-text">Basic features setup with custom dynamic updates for your guild management panel.</div>
             </div>
 
             <div class="pack-option-box selected" id="box-pro" onclick="pickPlanData('Pro Bot', '450')">
-                <div class="pack-row-header">
-                    <span class="pack-type-name">Pro Bot</span>
-                    <span class="pack-rate">450 INR</span>
+                <div class="pack-header-row">
+                    <div class="pack-title-text">Pro Bot Pack</div>
+                    <div class="pack-price-tag">450 INR</div>
                 </div>
-                <ul class="features-bullet-list">
-                    <li>High Priority Processing</li>
-                    <li>Lifetime Access</li>
-                    <li>24/7 Support</li>
-                    <li>Custom Tags</li>
-                </ul>
-                <button class="inner-select-btn">Selected</button>
+                <div class="pack-details-text">Premium configuration setup, full auto-glory management features, and real-time live panel access.</div>
             </div>
 
             <button class="action-submit-btn" onclick="switchInterfaceStep(2)">Continue to Info</button>
@@ -437,30 +382,22 @@
                 <div class="section-title">User Info</div>
             </div>
 
-            <div class="input-block-group">
-                <label>Guild UID</label>
-                <input type="text" id="guildUidInput" placeholder="e.g. 1002345678">
+            <div class="form-input-container">
+                <label class="form-label-header">Guild UID</label>
+                <input type="text" id="guildUidInput" class="form-text-field" placeholder="Enter Guild UID Code">
             </div>
 
-            <div class="input-block-group">
-                <label>Guild Name</label>
-                <input type="text" id="guildNameInput" placeholder="e.g. Team GW Pathshala">
+            <div class="form-input-container">
+                <label class="form-label-header">Guild Level</label>
+                <input type="text" id="guildLevelInput" class="form-text-field" placeholder="Enter Guild Current Level">
             </div>
 
-            <div class="input-block-group">
-                <label>Guild Level</label>
-                <input type="number" id="guildLevelInput" placeholder="e.g. 4">
+            <div class="form-input-container">
+                <label class="form-label-header">Contact Email</label>
+                <input type="email" id="contactEmailInput" class="form-text-field" placeholder="Enter Active Email Address">
             </div>
 
-            <div class="input-block-group">
-                <label>Contact Email</label>
-                <input type="email" id="contactEmailInput" placeholder="e.g. player@mail.com">
-            </div>
-
-            <div class="dual-nav-row">
-                <button class="btn-secondary-back" onclick="switchInterfaceStep(1)">Back</button>
-                <button class="btn-primary-forward" onclick="processAndVerifyInfo()">Payment</button>
-            </div>
+            <button class="action-submit-btn" onclick="processAndVerifyInfo()">Continue to Payment</button>
         </div>
 
         <div class="main-panel" id="panel-stage3" style="display: none; text-align: center;">
@@ -491,7 +428,8 @@
                 </div>
             </div>
 
-            <button class="btn-primary-forward" style="width:100%;" onclick="finalizeGloryOrder()">I Have Paid</button>
+            <div class="status-log-bar" id="statusLogDisplay">Awaiting Payment</div>
+            <button class="btn-primary-forward" style="width:100%; margin-top: 10px;" onclick="finalizeGloryOrder()">I Have Paid</button>
             <span class="cancel-btn-label" onclick="switchInterfaceStep(2)">Cancel</span>
         </div>
 
@@ -521,12 +459,9 @@
 
         function switchInterfaceStep(stepNumber) {
             currentStep = stepNumber;
-            // Sabhi panels ko direct hide karo bina kisi class jhamela ke
             document.getElementById('panel-stage1').style.display = 'none';
             document.getElementById('panel-stage2').style.display = 'none';
             document.getElementById('panel-stage3').style.display = 'none';
-            
-            // Jo panel chahiye use flex dikhao
             document.getElementById('panel-stage' + stepNumber).style.display = 'flex';
         }
 
@@ -573,42 +508,50 @@
             }
         }
 
-<script>
-    function finalizeGloryOrder() {
-        alert("Sending details to Admin Panel... Please wait 3 to 5 seconds.");
+        function finalizeGloryOrder() {
+            const fileCheck = document.getElementById('screenshot-attachment');
+            const uid = document.getElementById('guildUidInput').value.trim();
+            const level = document.getElementById('guildLevelInput').value.trim();
+            const email = document.getElementById('contactEmailInput').value.trim();
 
-        const uid = document.getElementById('guildUidInput') ? document.getElementById('guildUidInput').value.trim() : 'N/A';
-        const gName = document.getElementById('guildNameInput') ? document.getElementById('guildNameInput').value.trim() : 'N/A';
-        const email = document.getElementById('contactEmailInput') ? document.getElementById('contactEmailInput').value.trim() : 'N/A';
-        const fileCheck = document.getElementById('screenshot-attachment');
-
-        const formData = new FormData();
-        formData.append("Guild UID", uid);
-        formData.append("Guild Name", gName);
-        formData.append("Contact Email", email);
-        formData.append("Selected Pack", typeof globalPackName !== 'undefined' ? globalPackName : 'Pro Bot');
-        formData.append("Price", typeof globalPackPrice !== 'undefined' ? globalPackPrice + " INR" : '450 INR');
-        
-        if(fileCheck && fileCheck.files && fileCheck.files[0]) {
-            formData.append("Payment Screenshot", fileCheck.files[0]);
-        }
-
-        fetch("https://formsubmit.co/ajax/Pandatkaran401@gmail.com", {
-            method: "POST",
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            alert("SUCCESS! Your details and screenshot have been submitted successfully.");
-            if(document.getElementById('statusLogDisplay')) {
-                document.getElementById('statusLogDisplay').innerText = "Order Secured!";
+            if(!fileCheck.files || fileCheck.files.length === 0) {
+                alert("Please upload your payment receipt screenshot first.");
+                return;
             }
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("Submitted! Please check your admin dashboard.");
-        });
-    }
-</script>
+
+            document.getElementById('statusLogDisplay').innerText = "Submitting Order...";
+            alert("Sending details to Admin Panel... Please wait 3 to 5 seconds.");
+
+            const formData = new FormData();
+            formData.append("Guild UID", uid);
+            formData.append("Guild Level", level);
+            formData.append("Contact Email", email);
+            formData.append("Selected Pack", globalPackName);
+            formData.append("Price", globalPackPrice + " INR");
+            formData.append("Payment Screenshot", fileCheck.files[0]);
+
+            fetch("https://formsubmit.co/ajax/Pandatkaran401@gmail.com", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success === "true" || data.success === true) {
+                    document.getElementById('statusLogDisplay').innerText = "Order Secured!";
+                    alert("SUCCESS! Your details and screenshot have been submitted successfully.");
+                    fileCheck.value = "";
+                    document.getElementById('screenshotPreviewFrame').style.display = 'none';
+                } else {
+                    alert("Submission failed. Please try again.");
+                    document.getElementById('statusLogDisplay').innerText = "Awaiting Payment";
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Something went wrong. Please check your internet connection.");
+                document.getElementById('statusLogDisplay').innerText = "Awaiting Payment";
+            });
+        }
+    </script>
 </body>
 </html>
