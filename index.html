@@ -573,14 +573,57 @@
             }
         }
 
-        function finalizeGloryOrder() {
-            const fileCheck = document.getElementById('screenshot-attachment');
-            if(!fileCheck.files || fileCheck.files.length === 0) {
-                alert("Please upload your payment receipt screenshot first.");
-                return;
-            }
-            alert("Order locked successfully! Our admin team will verify it soon.");
+   function finalizeGloryOrder() {
+    const fileCheck = document.getElementById('screenshot-attachment');
+    const uid = document.getElementById('guildUidInput').value.trim();
+    const gName = document.getElementById('guildNameInput').value.trim();
+    const email = document.getElementById('contactEmailInput').value.trim();
+
+    if(!uid || !email) {
+        alert("Please go back and fill out your Guild UID and Contact Email first!");
+        return;
+    }
+
+    if(!fileCheck.files || fileCheck.files.length === 0) {
+        alert("Please attach the payment screenshot file first!");
+        return;
+    }
+
+    document.getElementById('statusLogDisplay').innerText = "Submitting Order...";
+    alert("Sending details to Admin Panel... Please wait 3 to 5 seconds.");
+
+    const formData = new FormData();
+    formData.append("Guild UID", uid);
+    formData.append("Guild Name", gName);
+    formData.append("Contact Email", email);
+    formData.append("Selected Pack", globalPackName);
+    formData.append("Price", globalPackPrice + " INR");
+    formData.append("Payment Screenshot", fileCheck.files[0]);
+
+    const adminEmail = "Pandatkaran401@gmail.com"; 
+
+    fetch(`https://formsubmit.co/ajax/${adminEmail}`, {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data.success === "true" || data.success === true) {
+            document.getElementById('statusLogDisplay').innerText = "Order Secured!";
+            alert("SUCCESS! Your details and screenshot have been submitted successfully.");
+            fileCheck.value = "";
+            document.getElementById('screenshotPreviewFrame').style.display = 'none';
+        } else {
+            alert("Submission failed. Please try again.");
+            document.getElementById('statusLogDisplay').innerText = "Awaiting Payment";
         }
-    </script>
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("Something went wrong. Please check your internet connection.");
+        document.getElementById('statusLogDisplay').innerText = "Awaiting Payment";
+    });
+}
+</script>
 </body>
 </html>
