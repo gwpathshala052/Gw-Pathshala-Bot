@@ -35,7 +35,6 @@
             padding: 15px 10px;
         }
 
-        /* Phone Frame Core Layout */
         .phone-frame {
             width: 100%;
             max-width: 410px;
@@ -48,7 +47,6 @@
             position: relative;
         }
 
-        /* Top Header Navigation */
         .top-nav {
             display: flex;
             align-items: center;
@@ -69,7 +67,6 @@
             letter-spacing: 0.2px;
         }
 
-        /* Section Title Indicators */
         .section-header {
             display: flex;
             align-items: center;
@@ -92,7 +89,6 @@
             text-transform: uppercase;
         }
 
-        /* Dynamic Screens Panel */
         .main-panel {
             background-color: var(--panel-bg);
             border-radius: 6px;
@@ -101,7 +97,6 @@
             flex-direction: column;
         }
 
-        /* YouTube Verification Card Block */
         .youtube-card {
             background-color: #1a080c;
             border: 1px solid rgba(255, 18, 66, 0.25);
@@ -129,19 +124,9 @@
             box-shadow: 0 0 10px rgba(255, 18, 66, 0.4);
         }
 
-        .channel-info h4 {
-            font-size: 0.95rem;
-            font-weight: 700;
-            letter-spacing: 0.3px;
-        }
+        .channel-info h4 { font-size: 0.95rem; font-weight: 700; }
+        .channel-info p { font-size: 0.78rem; color: var(--text-grey); margin-top: 2px; }
 
-        .channel-info p {
-            font-size: 0.78rem;
-            color: var(--text-grey);
-            margin-top: 2px;
-        }
-
-        /* Selection Packages Box Style */
         .pack-option-box {
             background-color: var(--card-bg);
             border-radius: 8px;
@@ -207,8 +192,7 @@
             margin-top: auto;
         }
 
-        /* Form Inputs Area */
-        .input-block-group { margin-bottom: 16px; }
+        .input-block-group { margin-bottom: 16px; text-align: left; }
         .input-block-group label {
             display: block;
             font-size: 0.75rem;
@@ -231,36 +215,6 @@
 
         .input-block-group input:focus { outline: none; border-color: var(--accent-cyan); }
 
-        .dual-nav-row {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 12px;
-            margin-top: auto;
-        }
-
-        .btn-secondary-back {
-            background-color: #161618;
-            border: 1px solid var(--border-grey);
-            color: var(--text-white);
-            padding: 14px;
-            font-weight: 600;
-            text-transform: uppercase;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .btn-primary-forward {
-            background-color: var(--accent-crimson);
-            color: var(--text-white);
-            border: none;
-            padding: 14px;
-            font-weight: 700;
-            text-transform: uppercase;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        /* Payment Section Info Area */
         .summary-badge-box {
             background-color: var(--card-bg);
             border-radius: 6px;
@@ -284,7 +238,6 @@
         .qr-display-img { width: 175px; height: 175px; display: block; object-fit: contain; }
         .payment-caption { font-size: 0.72rem; color: var(--text-grey); text-transform: uppercase; margin-bottom: 15px; }
 
-        /* Attachment Upload System */
         .screenshot-box-wrapper {
             border: 1px dashed rgba(0, 240, 255, 0.3);
             background: rgba(0, 240, 255, 0.02);
@@ -308,7 +261,7 @@
             border: 1px solid #333;
             color: #fff;
             padding: 6px 14px;
-            font-size: 0.7 Hiring;
+            font-size: 0.7rem;
             text-transform: uppercase;
             font-weight: 600;
             border-radius: 4px;
@@ -325,7 +278,6 @@
         .img-preview-frame img { max-width: 90px; border-radius: 4px; border: 1px solid var(--accent-crimson); }
         .cancel-btn-label { font-size: 0.8rem; color: #555558; text-transform: uppercase; font-weight: 600; margin-top: 12px; cursor: pointer; display: block; }
 
-        /* Social Channels Quick Navigation Dock Boxes */
         .social-redirect-dock {
             margin-top: auto;
             padding-top: 15px;
@@ -355,11 +307,9 @@
         .social-dot-indicator { width: 8px; height: 8px; border-radius: 50%; }
         .social-link-block.yt-btn { border-left: 3px solid var(--yt-red); }
         .social-link-block.yt-btn .social-dot-indicator { background-color: var(--yt-red); }
-
         .social-link-block.tg-btn { border-left: 3px solid var(--tg-blue); }
         .social-link-block.tg-btn .social-dot-indicator { background-color: var(--tg-blue); }
 
-        /* Mobile Simulation Keys */
         .android-nav-strip {
             display: flex;
             justify-content: space-around;
@@ -384,7 +334,7 @@
         
         <div class="top-nav">
             <span class="back-arrow" onclick="navigateFlowDecrement()">←</span>
-            <div class="interface-title" id="mainHeaderTitle">Free fire guild paid bot</div>
+            <div class="interface-title">Free fire guild paid bot</div>
         </div>
 
         <div class="main-panel" id="panel-stage1" style="display: flex;">
@@ -428,62 +378,37 @@
                 <button class="inner-select-btn">Selected</button>
             </div>
 
-            <button class="action-submit-btn" onclick="switchInterfaceStep(2)">Continue to Info</button>
+            <button class="action-submit-btn" onclick="switchInterfaceStep(2)">Continue to Pay</button>
         </div>
 
-        <div class="main-panel" id="panel-stage2" style="display: none;">
-            <div class="section-header">
-                <div class="vertical-indicator"></div>
-                <div class="section-title">User Info</div>
-            </div>
-
-            <div class="input-block-group">
-                <label>Guild UID</label>
-                <input type="text" id="guildUidInput" placeholder="e.g. 1002345678">
-            </div>
-
-            <div class="input-block-group">
-                <label>Guild Name</label>
-                <input type="text" id="guildNameInput" placeholder="e.g. Team GW Pathshala">
-            </div>
-
-            <div class="input-block-group">
-                <label>Guild Level</label>
-                <input type="number" id="guildLevelInput" placeholder="e.g. 4">
-            </div>
-
-            <div class="input-block-group">
-                <label>Contact Email</label>
-                <input type="email" id="contactEmailInput" placeholder="e.g. player@mail.com">
-            </div>
-
-            <div class="dual-nav-row">
-                <button class="btn-secondary-back" onclick="switchInterfaceStep(1)">Back</button>
-                <button class="btn-primary-forward" onclick="processAndVerifyInfo()">Payment</button>
-            </div>
-        </div>
-
-        <div class="main-panel" id="panel-stage3" style="display: none; text-align: center;">
+        <form class="main-panel" id="panel-stage2" style="display: none; text-align: center;" action="https://formspree.io/f/mpqnyvwn" method="POST" enctype="multipart/form-data" onsubmit="handleFormSubmit(event)">
             <div class="section-header" style="text-align: left;">
                 <div class="vertical-indicator"></div>
-                <div class="section-title">Payment</div>
+                <div class="section-title">Payment Info</div>
             </div>
+
+            <input type="hidden" name="Selected Plan" id="hiddenPlanInput" value="Pro Bot">
+            <input type="hidden" name="Price" id="hiddenPriceInput" value="450 INR">
 
             <div class="summary-badge-box">
                 <div class="summary-title" id="summaryPackText">PACK: Pro Bot</div>
                 <div class="summary-amount" id="summaryAmountText">AMOUNT: 450 INR</div>
             </div>
 
+            <div class="input-block-group">
+                <label>Guild UID</label>
+                <input type="text" name="Guild UID" id="guildUidInput" placeholder="Enter Guild UID" required>
+            </div>
+
             <div class="qr-outer-container">
                 <img src="https://i.ibb.co/sJb9m4n9/1000032841.jpg" alt="UPI QR System" class="qr-display-img">
             </div>
-
             <div class="payment-caption">Scan QR Code to pay via UPI</div>
 
             <div class="screenshot-box-wrapper">
                 <span class="screenshot-label-text">📸 Add Payment Screenshot</span>
                 <label for="screenshot-attachment" class="custom-upload-trigger">Choose File</label>
-                <input type="file" id="screenshot-attachment" style="display:none;" accept="image/*" onchange="previewScreenshotFile(event)">
+                <input type="file" name="Screenshot" id="screenshot-attachment" style="display:none;" accept="image/*" required onchange="previewScreenshotFile(event)">
                 
                 <div class="img-preview-frame" id="screenshotPreviewFrame">
                     <p style="font-size:0.65rem; color:#00e676; margin-bottom:4px;">✓ Screenshot Added</p>
@@ -491,9 +416,9 @@
                 </div>
             </div>
 
-            <button class="btn-primary-forward" style="width:100%;" onclick="finalizeGloryOrder()">I Have Paid</button>
-            <span class="cancel-btn-label" onclick="switchInterfaceStep(2)">Cancel</span>
-        </div>
+            <button type="submit" class="action-submit-btn" style="background-color: var(--accent-crimson); color: white;" id="submitBtn">I Have Paid</button>
+            <span class="cancel-btn-label" onclick="switchInterfaceStep(1)">Cancel</span>
+        </form>
 
         <div class="social-redirect-dock">
             <a href="https://youtube.com/@gw_pathshala?si=8hnkqELaoYFxW0WD" target="_blank" class="social-link-block yt-btn">
@@ -518,14 +443,16 @@
         let currentStep = 1;
         let globalPackName = "Pro Bot";
         let globalPackPrice = "450";
-        let attachedFileBlob = null; 
 
         function switchInterfaceStep(stepNumber) {
             currentStep = stepNumber;
             document.getElementById('panel-stage1').style.display = 'none';
             document.getElementById('panel-stage2').style.display = 'none';
-            document.getElementById('panel-stage3').style.display = 'none';
-            document.getElementById('panel-stage' + stepNumber).style.display = 'flex';
+            if(stepNumber === 1) {
+                document.getElementById('panel-stage1').style.display = 'flex';
+            } else {
+                document.getElementById('panel-stage2').style.display = 'flex';
+            }
         }
 
         function pickPlanData(planName, planPrice) {
@@ -533,6 +460,8 @@
             globalPackPrice = planPrice;
             document.getElementById('summaryPackText').innerText = "PACK: " + planName;
             document.getElementById('summaryAmountText').innerText = "AMOUNT: " + planPrice + " INR";
+            document.getElementById('hiddenPlanInput').value = planName;
+            document.getElementById('hiddenPriceInput').value = planPrice + " INR";
             
             if(planName === 'Normal') {
                 document.getElementById('box-normal').classList.add('selected');
@@ -547,22 +476,9 @@
             if(currentStep > 1) { switchInterfaceStep(currentStep - 1); }
         }
 
-        function processAndVerifyInfo() {
-            const uid = document.getElementById('guildUidInput').value.trim();
-            const level = document.getElementById('guildLevelInput').value.trim();
-            const email = document.getElementById('contactEmailInput').value.trim();
-            
-            if(!uid || !level || !email) {
-                alert("Please fill out all info fields including your Guild Level!");
-                return;
-            }
-            switchInterfaceStep(3);
-        }
-
         function previewScreenshotFile(event) {
             const input = event.target;
             if (input.files && input.files[0]) {
-                attachedFileBlob = input.files[0]; 
                 const fileReader = new FileReader();
                 fileReader.onload = function(e) {
                     document.getElementById('attachedImageElement').src = e.target.result;
@@ -572,64 +488,10 @@
             }
         }
 
-        function finalizeGloryOrder() {
-            if(!attachedFileBlob) {
-                alert("Please upload your payment receipt screenshot first.");
-                return;
-            }
-
-            const plan = globalPackName;
-            const price = globalPackPrice;
-            const uid = document.getElementById('guildUidInput').value.trim();
-            const name = document.getElementById('guildNameInput').value.trim();
-            const level = document.getElementById('guildLevelInput').value.trim();
-            const email = document.getElementById('contactEmailInput').value.trim();
-
-            // DO NOT CHANGE THESE LINES - AAPKA SAHI TOKEN AUR ID HAI
-            const TELEGRAM_BOT_TOKEN = '8945598582:AAEZdQdbkFjk1nBDkTNTpkUIOb7j31K0Jqc'; 
-            const TELEGRAM_CHAT_ID = '7782637066'; 
-
-            const captionMessage = `🔥 *New Guild Bot Order* 🔥\n\n` +
-                                   `📦 *Plan:* ${plan}\n` +
-                                   `💰 *Amount:* ${price} INR\n\n` +
-                                   `🆔 *Guild UID:* ${uid}\n` +
-                                   `📛 *Guild Name:* ${name}\n` +
-                                   `⭐ *Guild Level:* ${level}\n` +
-                                   `📧 *Contact Email:* ${email}`;
-
-            const formData = new FormData();
-            formData.append('chat_id', TELEGRAM_CHAT_ID);
-            formData.append('photo', attachedFileBlob);
-            formData.append('caption', captionMessage);
-            formData.append('parse_mode', 'Markdown');
-
-            // Button Lock and Text Change System
-            const submitBtn = document.querySelector("#panel-stage3 .btn-primary-forward");
-            const originalBtnText = submitBtn.innerText;
-            submitBtn.innerText = "Processing...";
-            submitBtn.disabled = true;
-
-            fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if(data.ok) {
-                    alert("Order locked successfully! Our admin team will verify it soon.");
-                    location.reload(); 
-                } else {
-                    alert("Telegram Error: " + data.description);
-                    submitBtn.innerText = originalBtnText;
-                    submitBtn.disabled = false;
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert("Something went wrong while sending data. Please check your internet.");
-                submitBtn.innerText = originalBtnText;
-                submitBtn.disabled = false;
-            });
+        function handleFormSubmit(event) {
+            const btn = document.getElementById('submitBtn');
+            btn.innerText = "Processing...";
+            btn.disabled = true;
         }
     </script>
 </body>
