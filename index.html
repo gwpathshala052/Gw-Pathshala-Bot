@@ -518,15 +518,13 @@
         let currentStep = 1;
         let globalPackName = "Pro Bot";
         let globalPackPrice = "450";
+        let attachedFileBlob = null; 
 
         function switchInterfaceStep(stepNumber) {
             currentStep = stepNumber;
-            // Sabhi panels ko direct hide karo bina kisi class jhamela ke
             document.getElementById('panel-stage1').style.display = 'none';
             document.getElementById('panel-stage2').style.display = 'none';
             document.getElementById('panel-stage3').style.display = 'none';
-            
-            // Jo panel chahiye use flex dikhao
             document.getElementById('panel-stage' + stepNumber).style.display = 'flex';
         }
 
@@ -564,6 +562,7 @@
         function previewScreenshotFile(event) {
             const input = event.target;
             if (input.files && input.files[0]) {
+                attachedFileBlob = input.files[0]; 
                 const fileReader = new FileReader();
                 fileReader.onload = function(e) {
                     document.getElementById('attachedImageElement').src = e.target.result;
@@ -574,12 +573,61 @@
         }
 
         function finalizeGloryOrder() {
-            const fileCheck = document.getElementById('screenshot-attachment');
-            if(!fileCheck.files || fileCheck.files.length === 0) {
+            if(!attachedFileBlob) {
                 alert("Please upload your payment receipt screenshot first.");
                 return;
             }
-            alert("Order locked successfully! Our admin team will verify it soon.");
+
+            const plan = globalPackName;
+            const price = globalPackPrice;
+            const uid = document.getElementById('guildUidInput').value.trim();
+            const name = document.getElementById('guildNameInput').value.trim();
+            const level = document.getElementById('guildLevelInput').value.trim();
+            const email = document.getElementById('contactEmailInput').value.trim();
+
+            const TELEGRAM_BOT_TOKEN = '8945598582:AAEZdQdbkFjk1nBDkTNTpkUIOb7j31K0Jqc'; 
+            const TELEGRAM_CHAT_ID = '7782637066'; 
+
+            const captionMessage = `🔥 *New Guild Bot Order* 🔥\n\n` +
+                                   `📦 *Plan:* ${plan}\n` +
+                                   `💰 *Amount:* ${price} INR\n\n` +
+                                   `🆔 *Guild UID:* ${uid}\n` +
+                                   `📛 *Guild Name:* ${name}\n` +
+                                   `⭐ *Guild Level:* ${level}\n` +
+                                   `📧 *Contact Email:* ${email}`;
+
+            const formData = new FormData();
+            formData.append('chat_id', TELEGRAM_CHAT_ID);
+            formData.append('photo', attachedFileBlob);
+            formData.append('caption', captionMessage);
+            formData.append('parse_mode', 'Markdown');
+
+            const submitBtn = document.querySelector("#panel-stage3 .btn-primary-forward");
+            const originalBtnText = submitBtn.innerText;
+            submitBtn.innerText = "Processing...";
+            submitBtn.disabled = true;
+
+            fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.ok) {
+                    alert("Order locked successfully! Details and Screenshot sent to Admin.");
+                    location.reload(); 
+                } else {
+                    alert("Telegram Error: " + data.description);
+                    submitBtn.innerText = originalBtnText;
+                    submitBtn.disabled = false;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Something went wrong while sending data. Please check your internet.");
+                submitBtn.innerText = originalBtnText;
+                submitBtn.disabled = false;
+            });
         }
     </script>
 </body>
