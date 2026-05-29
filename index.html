@@ -381,6 +381,7 @@
             <button class="action-submit-btn" onclick="switchInterfaceStep(2)">Continue to Pay</button>
         </div>
 
+        <!-- Stable Formspree Implementation with AJAX handling -->
         <form class="main-panel" id="panel-stage2" style="display: none; text-align: center;" action="https://formspree.io/f/mpqnyvwn" method="POST" enctype="multipart/form-data" onsubmit="handleFormSubmit(event)">
             <div class="section-header" style="text-align: left;">
                 <div class="vertical-indicator"></div>
@@ -488,10 +489,47 @@
             }
         }
 
+        // Updated Secure Async Form Submission Method
         function handleFormSubmit(event) {
+            event.preventDefault();
+            const formElement = event.target;
             const btn = document.getElementById('submitBtn');
-            btn.innerText = "Processing...";
+            
+            btn.innerText = "Sending Data...";
             btn.disabled = true;
+
+            const formDataInstance = new FormData(formElement);
+
+            fetch(formElement.action, {
+                method: formElement.method,
+                body: formDataInstance,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("✅ Payment details and screenshot sent successfully! Your bot access will be activated soon.");
+                    formElement.reset();
+                    document.getElementById('screenshotPreviewFrame').style.display = 'none';
+                    switchInterfaceStep(1);
+                } else {
+                    response.json().then(data => {
+                        if (Object.hasOwn(data, 'errors')) {
+                            alert(data["errors"].map(error => error["message"]).join(", "));
+                        } else {
+                            alert("❌ Error sending data. Please check connection and try again.");
+                        }
+                    });
+                }
+            })
+            .catch(error => {
+                alert("❌ Systems Error. Connection interrupted.");
+            })
+            .finally(() => {
+                btn.innerText = "I Have Paid";
+                btn.disabled = false;
+            });
         }
     </script>
 </body>
