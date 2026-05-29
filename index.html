@@ -94,7 +94,6 @@
             border-radius: 6px;
             padding: 20px 16px;
             flex-grow: 1;
-            display: flex;
             flex-direction: column;
         }
 
@@ -277,7 +276,7 @@
         }
 
         .img-preview-frame img { max-width: 90px; border-radius: 4px; border: 1px solid var(--accent-crimson); }
-        .cancel-btn-label { font-size: 0.8rem; color: #555558; text-transform: uppercase; font-weight: 600; margin-top: 12px; cursor: pointer; display: block; }
+        .cancel-btn-label { font-size: 0.8rem; color: #555558; text-transform: uppercase; font-weight: 600; margin-top: 12px; cursor: pointer; }
 
         .social-redirect-dock {
             margin-top: auto;
@@ -338,96 +337,100 @@
             <div class="interface-title">Free fire guild paid bot</div>
         </div>
 
-        <!-- FIXED GLOBAL FORM BLOCK WRAPPER TO PREVENT CLICK LOSS -->
-        <form id="masterBotForm" action="https://formspree.io/f/mpqnyvwn" method="POST" enctype="multipart/form-data" onsubmit="handleFormSubmit(event)" style="display: contents;">
+        <div class="main-panel" id="panel-stage1" style="display: flex;">
+            <div class="section-header">
+                <div class="vertical-indicator"></div>
+                <div class="section-title">Pack Selection</div>
+            </div>
+
+            <a href="https://youtube.com/@gw_pathshala?si=8hnkqELaoYFxW0WD" target="_blank" class="youtube-card">
+                <div class="youtube-avatar">GW</div>
+                <div class="channel-info">
+                    <h4>GW Pathshala Official</h4>
+                    <p>32k Subscribers</p>
+                </div>
+            </a>
+
+            <div class="pack-option-box" id="box-normal" onclick="pickPlanData('Normal', '239')">
+                <div class="pack-row-header">
+                    <span class="pack-type-name">Normal</span>
+                    <span class="pack-rate">239 INR</span>
+                </div>
+                <ul class="features-bullet-list">
+                    <li>Standard Bot Speed & Processing</li>
+                    <li>Guild Glory Boost Available</li>
+                    <li>100% Safe & Anti-Ban System</li>
+                    <li>Monthly Access Key Included</li>
+                </ul>
+                <button class="inner-select-btn">Selected</button>
+            </div>
+
+            <div class="pack-option-box selected" id="box-pro" onclick="pickPlanData('Pro Bot', '450')">
+                <div class="pack-row-header">
+                    <span class="pack-type-name">Pro Bot</span>
+                    <span class="pack-rate">450 INR</span>
+                </div>
+                <ul class="features-bullet-list">
+                    <li>Maximum Guild Glory Boost (Ultra Fast)</li>
+                    <li>Instant High-Priority Processing</li>
+                    <li>Auto-Push Level Up Settings Enabled</li>
+                    <li>Custom Elite Guild Badges & Tags</li>
+                    <li>24/7 Premium Priority Support Access</li>
+                    <li>Lifetime Full Access Key (No Renewal)</li>
+                </ul>
+                <button class="inner-select-btn">Selected</button>
+            </div>
+
+            <button class="action-submit-btn" onclick="switchInterfaceStep(2)">Continue to Pay</button>
+        </div>
+
+        <form class="main-panel" id="panel-stage2" style="display: none; text-align: center;" action="https://formspree.io/f/mpqnyvwn" method="POST" enctype="multipart/form-data" onsubmit="handleFormSubmit(event)">
+            <div class="section-header" style="text-align: left;">
+                <div class="vertical-indicator"></div>
+                <div class="section-title">Payment Info</div>
+            </div>
 
             <input type="hidden" name="Selected Plan" id="hiddenPlanInput" value="Pro Bot">
             <input type="hidden" name="Price" id="hiddenPriceInput" value="450 INR">
 
-            <!-- STAGE 1: PACK SELECTION -->
-            <div class="main-panel" id="panel-stage1" style="display: flex;">
-                <div class="section-header">
-                    <div class="vertical-indicator"></div>
-                    <div class="section-title">Pack Selection</div>
-                </div>
-
-                <a href="https://youtube.com/@gw_pathshala?si=8hnkqELaoYFxW0WD" target="_blank" class="youtube-card">
-                    <div class="youtube-avatar">GW</div>
-                    <div class="channel-info">
-                        <h4>GW Pathshala Official</h4>
-                        <p>32k Subscribers</p>
-                    </div>
-                </a>
-
-                <div class="pack-option-box" id="box-normal" onclick="pickPlanData('Normal', '239')">
-                    <div class="pack-row-header">
-                        <span class="pack-type-name">Normal</span>
-                        <span class="pack-rate">239 INR</span>
-                    </div>
-                    <ul class="features-bullet-list">
-                        <li>Standard Bot Speed</li>
-                        <li>Monthly Access</li>
-                        <li>Email Support</li>
-                    </ul>
-                    <button type="button" class="inner-select-btn">Selected</button>
-                </div>
-
-                <div class="pack-option-box selected" id="box-pro" onclick="pickPlanData('Pro Bot', '450')">
-                    <div class="pack-row-header">
-                        <span class="pack-type-name">Pro Bot</span>
-                        <span class="pack-rate">450 INR</span>
-                    </div>
-                    <ul class="features-bullet-list">
-                        <li>High Priority Processing</li>
-                        <li>Lifetime Access</li>
-                        <li>24/7 Support</li>
-                        <li>Custom Tags</li>
-                    </ul>
-                    <button type="button" class="inner-select-btn">Selected</button>
-                </div>
-
-                <button type="button" class="action-submit-btn" onclick="switchInterfaceStep(2)">Continue to Pay</button>
+            <div class="summary-badge-box">
+                <div class="summary-title" id="summaryPackText">PACK: Pro Bot</div>
+                <div class="summary-amount" id="summaryAmountText">AMOUNT: 450 INR</div>
             </div>
 
-            <!-- STAGE 2: PAYMENT INFO & GUILD UID -->
-            <div class="main-panel" id="panel-stage2" style="display: none; text-align: center;">
-                <div class="section-header" style="text-align: left;">
-                    <div class="vertical-indicator"></div>
-                    <div class="section-title">Payment Info</div>
-                </div>
-
-                <div class="summary-badge-box">
-                    <div class="summary-title" id="summaryPackText">PACK: Pro Bot</div>
-                    <div class="summary-amount" id="summaryAmountText">AMOUNT: 450 INR</div>
-                </div>
-
-                <div class="input-block-group">
-                    <label>Guild UID</label>
-                    <input type="text" name="Guild UID" id="guildUidInput" placeholder="Enter Guild UID" required>
-                </div>
-
-                <!-- YOUR ORIGINAL QR UNTOUCHED -->
-                <div class="qr-outer-container">
-                    <img src="https://i.ibb.co/sJb9m4n9/1000032841.jpg" alt="UPI QR System" class="qr-display-img">
-                </div>
-                <div class="payment-caption">Scan QR Code to pay via UPI</div>
-
-                <div class="screenshot-box-wrapper">
-                    <span class="screenshot-label-text">📸 Add Payment Screenshot</span>
-                    <label for="screenshot-attachment" class="custom-upload-trigger">Choose File</label>
-                    <input type="file" name="Screenshot" id="screenshot-attachment" style="display:none;" accept="image/*" required onchange="previewScreenshotFile(event)">
-                    
-                    <div class="img-preview-frame" id="screenshotPreviewFrame">
-                        <p style="font-size:0.65rem; color:#00e676; margin-bottom:4px;">✓ Screenshot Added</p>
-                        <img id="attachedImageElement" src="#" alt="Receipt Preview">
-                    </div>
-                </div>
-
-                <!-- NATIVE FIXED SUBMIT BUTTON CLICK -->
-                <button type="submit" class="action-submit-btn" style="background-color: var(--accent-crimson); color: white;" id="submitBtn">I Have Paid</button>
-                <span class="cancel-btn-label" onclick="switchInterfaceStep(1)">Cancel</span>
+            <div class="input-block-group">
+                <label>Guild UID</label>
+                <input type="text" name="Guild UID" id="guildUidInput" placeholder="Enter Guild UID" required>
             </div>
 
+            <div class="input-block-group">
+                <label>Guild Level</label>
+                <input type="number" name="Guild Level" id="guildLevelInput" placeholder="Enter Guild Level" required>
+            </div>
+
+            <div class="input-block-group">
+                <label>Your Email ID</label>
+                <input type="email" name="User Email" id="userEmailInput" placeholder="Enter Your Email ID" required>
+            </div>
+
+            <div class="qr-outer-container">
+                <img src="https://i.ibb.co/sJb9m4n9/1000032841.jpg" alt="UPI QR System" class="qr-display-img">
+            </div>
+            <div class="payment-caption">Scan QR Code to pay via UPI</div>
+
+            <div class="screenshot-box-wrapper">
+                <span class="screenshot-label-text">📸 Add Payment Screenshot</span>
+                <label for="screenshot-attachment" class="custom-upload-trigger">Choose File</label>
+                <input type="file" name="Screenshot" id="screenshot-attachment" style="display:none;" accept="image/*" required onchange="previewScreenshotFile(event)">
+                
+                <div class="img-preview-frame" id="screenshotPreviewFrame">
+                    <p style="font-size:0.65rem; color:#00e676; margin-bottom:4px;">✓ Screenshot Added</p>
+                    <img id="attachedImageElement" src="#" alt="Receipt Preview">
+                </div>
+            </div>
+
+            <button type="submit" class="action-submit-btn" style="background-color: var(--accent-crimson); color: white;" id="submitBtn">I Have Paid</button>
+            <span class="cancel-btn-label" onclick="switchInterfaceStep(1)">Cancel</span>
         </form>
 
         <div class="social-redirect-dock">
@@ -501,7 +504,6 @@
         function handleFormSubmit(event) {
             const btn = document.getElementById('submitBtn');
             btn.innerText = "Processing...";
-            // Prevent immediate freezing for smoother native data transport
             setTimeout(() => { btn.disabled = true; }, 10);
         }
     </script>
