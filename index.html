@@ -94,6 +94,7 @@
             border-radius: 6px;
             padding: 20px 16px;
             flex-grow: 1;
+            display: flex;
             flex-direction: column;
         }
 
@@ -134,6 +135,7 @@
             margin-bottom: 16px;
             border: 1px solid transparent;
             cursor: pointer;
+            text-align: left;
         }
 
         .pack-option-box.selected {
@@ -261,7 +263,7 @@
             border: 1px solid #333;
             color: #fff;
             padding: 6px 14px;
-            font-size: 0.7rem;
+            font-size: 0.7 flex;
             text-transform: uppercase;
             font-weight: 600;
             border-radius: 4px;
@@ -276,7 +278,7 @@
         }
 
         .img-preview-frame img { max-width: 90px; border-radius: 4px; border: 1px solid var(--accent-crimson); }
-        .cancel-btn-label { font-size: 0.8rem; color: #555558; text-transform: uppercase; font-weight: 600; margin-top: 12px; cursor: pointer; display: block; }
+        .cancel-btn-label { font-size: 0.8rem; color: #555558; text-transform: uppercase; font-weight: 600; margin-top: 12px; cursor: pointer; display: block; text-align: center; }
 
         .social-redirect-dock {
             margin-top: auto;
@@ -337,8 +339,8 @@
             <div class="interface-title">Free fire guild paid bot</div>
         </div>
 
-        <!-- Master Multi-stage Form -->
-        <form id="masterBotForm" action="https://formspree.io/f/mpqnyvwn" method="POST" enctype="multipart/form-data" onsubmit="handleFormSubmit(event)" style="display: contents;">
+        <!-- FIXED FORM STRUCTURE -->
+        <form id="masterBotForm" action="https://formspree.io/f/mpqnyvwn" method="POST" enctype="multipart/form-data" onsubmit="handleFormSubmit(event)">
             
             <!-- Hidden Fields for Pack Info -->
             <input type="hidden" name="Selected Plan" id="hiddenPlanInput" value="Pro Bot">
@@ -366,9 +368,10 @@
                         <span class="pack-rate">239 INR</span>
                     </div>
                     <ul class="features-bullet-list">
-                        <li>Guild Glory Available</li>
-                        <li>Standard Processing Speed</li>
-                        <li>Basic Email Support</li>
+                        <li>Guild Glory Boost Available</li>
+                        <li>Standard Account Processing</li>
+                        <li>Standard System Settings</li>
+                        <li>Basic Email Support Access</li>
                     </ul>
                     <button type="button" class="inner-select-btn">Selected</button>
                 </div>
@@ -391,7 +394,7 @@
                 <button type="button" class="action-submit-btn" onclick="validateAndGoToStep2()">Continue to Pay</button>
             </div>
 
-            <!-- STAGE 2: GUILD DETAILS (BICH WALA PAGE) -->
+            <!-- STAGE 2: GUILD DETAILS -->
             <div class="main-panel" id="panel-stage2" style="display: none;">
                 <div class="section-header">
                     <div class="vertical-indicator"></div>
@@ -414,7 +417,7 @@
                 </div>
 
                 <button type="button" class="action-submit-btn" onclick="validateAndGoToStep3()">Next: Payment</button>
-                <span class="cancel-btn-label" onclick="switchInterfaceStep(1)" style="text-align: center;">Back</span>
+                <span class="cancel-btn-label" onclick="switchInterfaceStep(1)">Back</span>
             </div>
 
             <!-- STAGE 3: PAYMENT & SCREENSHOT -->
@@ -429,8 +432,9 @@
                     <div class="summary-amount" id="summaryAmountText">AMOUNT: 450 INR</div>
                 </div>
 
+                <!-- NOTE: IS WAALE SRC MEIN APNA ORIGINAL WORKING QR LINK DAAL DENA -->
                 <div class="qr-outer-container">
-                    <img src="https://i.ibb.co/sJb9m4n9/1000032841.jpg" alt="UPI QR System" class="qr-display-img">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=175x175&data=upi://pay?pa=your-upi-id@okaxis" alt="UPI QR System" class="qr-display-img" id="qrCodeImage">
                 </div>
                 <div class="payment-caption">Scan QR Code to pay via UPI</div>
 
