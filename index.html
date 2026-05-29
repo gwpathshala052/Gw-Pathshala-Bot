@@ -16,7 +16,6 @@
             --border-grey: #2d2d30;
             --yt-red: #ff0000;
             --tg-blue: #0088cc;
-            --fam-orange: #ff5722; /* FamApp Orange Theme */
         }
 
         * {
@@ -136,7 +135,6 @@
             margin-bottom: 16px;
             border: 1px solid transparent;
             cursor: pointer;
-            text-align: left;
         }
 
         .pack-option-box.selected {
@@ -235,7 +233,7 @@
             border-radius: 12px;
             display: inline-block;
             margin: 0 auto 12px auto;
-            border: 3px solid var(--fam-orange); /* Highlighted FamApp Border */
+            border: 3px solid var(--accent-cyan);
         }
 
         .qr-display-img { width: 175px; height: 175px; display: block; object-fit: contain; }
@@ -340,9 +338,9 @@
             <div class="interface-title">Free fire guild paid bot</div>
         </div>
 
-        <!-- FIXED FORM WRAPPER AROUND BOTH PANELS -->
+        <!-- FIXED GLOBAL FORM BLOCK WRAPPER TO PREVENT CLICK LOSS -->
         <form id="masterBotForm" action="https://formspree.io/f/mpqnyvwn" method="POST" enctype="multipart/form-data" onsubmit="handleFormSubmit(event)" style="display: contents;">
-            
+
             <input type="hidden" name="Selected Plan" id="hiddenPlanInput" value="Pro Bot">
             <input type="hidden" name="Price" id="hiddenPriceInput" value="450 INR">
 
@@ -391,7 +389,7 @@
                 <button type="button" class="action-submit-btn" onclick="switchInterfaceStep(2)">Continue to Pay</button>
             </div>
 
-            <!-- STAGE 2: PAYMENT INFO -->
+            <!-- STAGE 2: PAYMENT INFO & GUILD UID -->
             <div class="main-panel" id="panel-stage2" style="display: none; text-align: center;">
                 <div class="section-header" style="text-align: left;">
                     <div class="vertical-indicator"></div>
@@ -408,11 +406,11 @@
                     <input type="text" name="Guild UID" id="guildUidInput" placeholder="Enter Guild UID" required>
                 </div>
 
-                <!-- YOUR EXACT ORIGINAL QR CODE LINK UNTOUCHED -->
+                <!-- YOUR ORIGINAL QR UNTOUCHED -->
                 <div class="qr-outer-container">
                     <img src="https://i.ibb.co/sJb9m4n9/1000032841.jpg" alt="UPI QR System" class="qr-display-img">
                 </div>
-                <div class="payment-caption" style="color: var(--fam-orange); font-weight: bold;">Scan FamApp QR Code to pay via UPI</div>
+                <div class="payment-caption">Scan QR Code to pay via UPI</div>
 
                 <div class="screenshot-box-wrapper">
                     <span class="screenshot-label-text">📸 Add Payment Screenshot</span>
@@ -425,7 +423,7 @@
                     </div>
                 </div>
 
-                <!-- Native Fixed Submit Button -->
+                <!-- NATIVE FIXED SUBMIT BUTTON CLICK -->
                 <button type="submit" class="action-submit-btn" style="background-color: var(--accent-crimson); color: white;" id="submitBtn">I Have Paid</button>
                 <span class="cancel-btn-label" onclick="switchInterfaceStep(1)">Cancel</span>
             </div>
@@ -503,7 +501,7 @@
         function handleFormSubmit(event) {
             const btn = document.getElementById('submitBtn');
             btn.innerText = "Processing...";
-            // Formspree compatibility fixed trigger
+            // Prevent immediate freezing for smoother native data transport
             setTimeout(() => { btn.disabled = true; }, 10);
         }
     </script>
