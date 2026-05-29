@@ -16,6 +16,7 @@
             --border-grey: #2d2d30;
             --yt-red: #ff0000;
             --tg-blue: #0088cc;
+            --fam-orange: #ff5722; /* FamApp Orange Theme */
         }
 
         * {
@@ -234,7 +235,7 @@
             border-radius: 12px;
             display: inline-block;
             margin: 0 auto 12px auto;
-            border: 3px solid var(--accent-cyan);
+            border: 3px solid var(--fam-orange); /* Highlighted FamApp Border */
         }
 
         .qr-display-img { width: 175px; height: 175px; display: block; object-fit: contain; }
@@ -263,7 +264,7 @@
             border: 1px solid #333;
             color: #fff;
             padding: 6px 14px;
-            font-size: 0.7 flex;
+            font-size: 0.7rem;
             text-transform: uppercase;
             font-weight: 600;
             border-radius: 4px;
@@ -278,7 +279,7 @@
         }
 
         .img-preview-frame img { max-width: 90px; border-radius: 4px; border: 1px solid var(--accent-crimson); }
-        .cancel-btn-label { font-size: 0.8rem; color: #555558; text-transform: uppercase; font-weight: 600; margin-top: 12px; cursor: pointer; display: block; text-align: center; }
+        .cancel-btn-label { font-size: 0.8rem; color: #555558; text-transform: uppercase; font-weight: 600; margin-top: 12px; cursor: pointer; display: block; }
 
         .social-redirect-dock {
             margin-top: auto;
@@ -339,10 +340,9 @@
             <div class="interface-title">Free fire guild paid bot</div>
         </div>
 
-        <!-- FIXED FORM STRUCTURE -->
-        <form id="masterBotForm" action="https://formspree.io/f/mpqnyvwn" method="POST" enctype="multipart/form-data" onsubmit="handleFormSubmit(event)">
+        <!-- FIXED FORM WRAPPER AROUND BOTH PANELS -->
+        <form id="masterBotForm" action="https://formspree.io/f/mpqnyvwn" method="POST" enctype="multipart/form-data" onsubmit="handleFormSubmit(event)" style="display: contents;">
             
-            <!-- Hidden Fields for Pack Info -->
             <input type="hidden" name="Selected Plan" id="hiddenPlanInput" value="Pro Bot">
             <input type="hidden" name="Price" id="hiddenPriceInput" value="450 INR">
 
@@ -361,67 +361,38 @@
                     </div>
                 </a>
 
-                <!-- Normal Pack (239 INR) -->
                 <div class="pack-option-box" id="box-normal" onclick="pickPlanData('Normal', '239')">
                     <div class="pack-row-header">
                         <span class="pack-type-name">Normal</span>
                         <span class="pack-rate">239 INR</span>
                     </div>
                     <ul class="features-bullet-list">
-                        <li>Guild Glory Boost Available</li>
-                        <li>Standard Account Processing</li>
-                        <li>Standard System Settings</li>
-                        <li>Basic Email Support Access</li>
+                        <li>Standard Bot Speed</li>
+                        <li>Monthly Access</li>
+                        <li>Email Support</li>
                     </ul>
                     <button type="button" class="inner-select-btn">Selected</button>
                 </div>
 
-                <!-- Pro Bot Pack (450 INR) -->
                 <div class="pack-option-box selected" id="box-pro" onclick="pickPlanData('Pro Bot', '450')">
                     <div class="pack-row-header">
                         <span class="pack-type-name">Pro Bot</span>
                         <span class="pack-rate">450 INR</span>
                     </div>
                     <ul class="features-bullet-list">
-                        <li>Maximum Guild Glory Boost</li>
-                        <li>Ultra-Fast Priority Processing</li>
-                        <li>24/7 Premium Priority Support</li>
-                        <li>Custom Guild Tags Enabled</li>
+                        <li>High Priority Processing</li>
+                        <li>Lifetime Access</li>
+                        <li>24/7 Support</li>
+                        <li>Custom Tags</li>
                     </ul>
                     <button type="button" class="inner-select-btn">Selected</button>
                 </div>
 
-                <button type="button" class="action-submit-btn" onclick="validateAndGoToStep2()">Continue to Pay</button>
+                <button type="button" class="action-submit-btn" onclick="switchInterfaceStep(2)">Continue to Pay</button>
             </div>
 
-            <!-- STAGE 2: GUILD DETAILS -->
-            <div class="main-panel" id="panel-stage2" style="display: none;">
-                <div class="section-header">
-                    <div class="vertical-indicator"></div>
-                    <div class="section-title">Guild Details</div>
-                </div>
-
-                <div class="input-block-group">
-                    <label>Guild UID</label>
-                    <input type="text" name="Guild UID" id="guildUidInput" placeholder="Enter Guild UID">
-                </div>
-
-                <div class="input-block-group">
-                    <label>Guild Level</label>
-                    <input type="number" name="Guild Level" id="guildLevelInput" placeholder="Enter Guild Level" min="1" max="100">
-                </div>
-
-                <div class="input-block-group">
-                    <label>Your Email ID</label>
-                    <input type="email" name="User Email" id="userEmailInput" placeholder="Enter Your Email ID">
-                </div>
-
-                <button type="button" class="action-submit-btn" onclick="validateAndGoToStep3()">Next: Payment</button>
-                <span class="cancel-btn-label" onclick="switchInterfaceStep(1)">Back</span>
-            </div>
-
-            <!-- STAGE 3: PAYMENT & SCREENSHOT -->
-            <div class="main-panel" id="panel-stage3" style="display: none; text-align: center;">
+            <!-- STAGE 2: PAYMENT INFO -->
+            <div class="main-panel" id="panel-stage2" style="display: none; text-align: center;">
                 <div class="section-header" style="text-align: left;">
                     <div class="vertical-indicator"></div>
                     <div class="section-title">Payment Info</div>
@@ -432,16 +403,21 @@
                     <div class="summary-amount" id="summaryAmountText">AMOUNT: 450 INR</div>
                 </div>
 
-                <!-- NOTE: IS WAALE SRC MEIN APNA ORIGINAL WORKING QR LINK DAAL DENA -->
-                <div class="qr-outer-container">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=175x175&data=upi://pay?pa=your-upi-id@okaxis" alt="UPI QR System" class="qr-display-img" id="qrCodeImage">
+                <div class="input-block-group">
+                    <label>Guild UID</label>
+                    <input type="text" name="Guild UID" id="guildUidInput" placeholder="Enter Guild UID" required>
                 </div>
-                <div class="payment-caption">Scan QR Code to pay via UPI</div>
+
+                <!-- YOUR EXACT ORIGINAL QR CODE LINK UNTOUCHED -->
+                <div class="qr-outer-container">
+                    <img src="https://i.ibb.co/sJb9m4n9/1000032841.jpg" alt="UPI QR System" class="qr-display-img">
+                </div>
+                <div class="payment-caption" style="color: var(--fam-orange); font-weight: bold;">Scan FamApp QR Code to pay via UPI</div>
 
                 <div class="screenshot-box-wrapper">
                     <span class="screenshot-label-text">📸 Add Payment Screenshot</span>
                     <label for="screenshot-attachment" class="custom-upload-trigger">Choose File</label>
-                    <input type="file" name="Screenshot" id="screenshot-attachment" style="display:none;" accept="image/*" onchange="previewScreenshotFile(event)">
+                    <input type="file" name="Screenshot" id="screenshot-attachment" style="display:none;" accept="image/*" required onchange="previewScreenshotFile(event)">
                     
                     <div class="img-preview-frame" id="screenshotPreviewFrame">
                         <p style="font-size:0.65rem; color:#00e676; margin-bottom:4px;">✓ Screenshot Added</p>
@@ -449,8 +425,9 @@
                     </div>
                 </div>
 
+                <!-- Native Fixed Submit Button -->
                 <button type="submit" class="action-submit-btn" style="background-color: var(--accent-crimson); color: white;" id="submitBtn">I Have Paid</button>
-                <span class="cancel-btn-label" onclick="switchInterfaceStep(2)">Back</span>
+                <span class="cancel-btn-label" onclick="switchInterfaceStep(1)">Cancel</span>
             </div>
 
         </form>
@@ -483,14 +460,10 @@
             currentStep = stepNumber;
             document.getElementById('panel-stage1').style.display = 'none';
             document.getElementById('panel-stage2').style.display = 'none';
-            document.getElementById('panel-stage3').style.display = 'none';
-            
             if(stepNumber === 1) {
                 document.getElementById('panel-stage1').style.display = 'flex';
-            } else if(stepNumber === 2) {
+            } else {
                 document.getElementById('panel-stage2').style.display = 'flex';
-            } else if(stepNumber === 3) {
-                document.getElementById('panel-stage3').style.display = 'flex';
             }
         }
 
@@ -511,22 +484,6 @@
             }
         }
 
-        function validateAndGoToStep2() {
-            switchInterfaceStep(2);
-        }
-
-        function validateAndGoToStep3() {
-            const uid = document.getElementById('guildUidInput').value.trim();
-            const level = document.getElementById('guildLevelInput').value.trim();
-            const email = document.getElementById('userEmailInput').value.trim();
-
-            if(!uid || !level || !email) {
-                alert("Please fill in all details (Guild UID, Level, and Email) before proceeding!");
-                return;
-            }
-            switchInterfaceStep(3);
-        }
-
         function navigateFlowDecrement() {
             if(currentStep > 1) { switchInterfaceStep(currentStep - 1); }
         }
@@ -544,16 +501,10 @@
         }
 
         function handleFormSubmit(event) {
-            const screenshot = document.getElementById('screenshot-attachment').files.length;
-            if(screenshot === 0) {
-                event.preventDefault();
-                alert("Please upload your payment screenshot first!");
-                return;
-            }
-            
             const btn = document.getElementById('submitBtn');
             btn.innerText = "Processing...";
-            btn.style.opacity = "0.7";
+            // Formspree compatibility fixed trigger
+            setTimeout(() => { btn.disabled = true; }, 10);
         }
     </script>
 </body>
